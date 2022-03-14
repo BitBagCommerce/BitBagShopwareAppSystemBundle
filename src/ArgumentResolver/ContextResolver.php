@@ -123,8 +123,8 @@ final class ContextResolver implements ArgumentValueResolverInterface
     private function getContext(ShopInterface $shop): ?Context
     {
         $authenticator = new AdminAuthenticator(new ClientCredentialsGrantType(
-            $shop->getApiKey(),
-            $shop->getSecretKey()
+            $shop->getApiKey() ?? '',
+            $shop->getSecretKey() ?? ''
         ), $shop->getShopUrl());
 
         try {
