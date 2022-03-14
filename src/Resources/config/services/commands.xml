@@ -5,8 +5,14 @@
         <service class="BitBag\ShopwareAppSystemBundle\Command\CreateManifestCommand"
                  id="bitbag.shopware_app_system.command.create_manifest_command"
         >
-            <argument type="service" id="twig"/>
+            <argument type="service" id="bitbag_shopware_app_system.twig.template_loader"/>
 
+            <tag name="console.command"/>
+        </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Command\CopyEntityMappingCommand"
+                 id="bitbag_shopware_app_system.command.copy_entity_mapping_command"
+        >
             <tag name="console.command"/>
         </service>
     </services>

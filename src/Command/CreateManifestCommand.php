@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Command;
 
+use BitBag\ShopwareAppSystemBundle\Twig\TemplateLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Twig\Environment;
 
 final class CreateManifestCommand extends Command
 {
-    protected static $defaultName = 'app:create-manifest';
+    protected static $defaultName = 'app-system:create-manifest';
 
     /** @var array<string, string> */
     private static array $consoleArguments = [
@@ -25,9 +25,9 @@ final class CreateManifestCommand extends Command
         'License' => 'MIT',
     ];
 
-    private Environment $twig;
+    private TemplateLoader $twig;
 
-    public function __construct(Environment $twig)
+    public function __construct(TemplateLoader $twig)
     {
         parent::__construct();
 
@@ -66,7 +66,7 @@ final class CreateManifestCommand extends Command
         $consoleArguments = $this->getConsoleArguments($io);
         $arguments = \array_merge($envArguments, $consoleArguments);
 
-        $manifest = $this->twig->render('@BitBagShopwareAppSystem/manifest-template.xml.twig', $arguments);
+        $manifest = $this->twig->render('manifest-template.xml.twig', $arguments);
 
         if (!file_put_contents($destination, $manifest)) {
             $io->error(\sprintf('Unable to write "%s".', $destination));

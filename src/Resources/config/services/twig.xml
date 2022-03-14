@@ -1,0 +1,11 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="BitBag\ShopwareAppSystemBundle\Twig\TemplateLoader"
+                 id="bitbag_shopware_app_system.twig.template_loader"
+        >
+            <argument type="service" id="kernel"/>
+        </service>
+    </services>
+</container>
