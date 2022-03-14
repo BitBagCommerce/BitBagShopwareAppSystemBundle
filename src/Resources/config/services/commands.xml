@@ -1,0 +1,13 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="BitBag\ShopwareAppSystemBundle\Command\CreateManifestCommand"
+                 id="bitbag.shopware_app_system.command.create_manifest_command"
+        >
+            <argument type="service" id="twig"/>
+
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>

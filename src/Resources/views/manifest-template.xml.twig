@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/master/src/Core/Framework/App/Manifest/Schema/manifest-1.0.xsd">
+    <meta>
+        <name>{{ APP_NAME }}</name>
+        <label>{{ LABEL }}</label>
+        <description>{{ DESCRIPTION }}</description>
+        <author>{{ AUTHOR }}</author>
+        <copyright>{{ COPYRIGHT }}</copyright>
+        <version>{{ VERSION }}</version>
+        <license>{{ LICENSE }}</license>
+    </meta>
+
+    <setup>
+        <registrationUrl>{{ APP_URL_BACKEND }}/registration</registrationUrl>
+        <secret>{{ APP_SECRET }}</secret>
+    </setup>
+
+    <permissions>
+        <!-- https://developer.shopware.com/docs/guides/plugins/apps/app-base-guide#permissions -->
+    </permissions>
+
+    <webhooks>
+        <!--  https://developer.shopware.com/docs/guides/plugins/apps/app-base-guide#webhooks-->
+        <webhook name="appLifecycleDeleted" url="{{ APP_URL_BACKEND }}/applifecycle/deleted" event="app.deleted"/>
+    </webhooks>
+</manifest>
