@@ -23,7 +23,6 @@ final class PostRequestShopSecretResolver implements RequestValueResolverInterfa
             return false;
         }
 
-        /** @var array{source?: array} $requestContent */
         $requestContent = $request->toArray();
 
         $hasSource = $requestContent && array_key_exists('source', $requestContent);
