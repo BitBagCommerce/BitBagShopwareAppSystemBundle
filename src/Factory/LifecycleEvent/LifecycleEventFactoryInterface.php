@@ -10,5 +10,9 @@ use Vin\ShopwareSdk\Data\Context;
 
 interface LifecycleEventFactoryInterface
 {
-    public function createNew(string $eventName, EventInterface $event, ?Context $context): LifecycleEventInterface;
+    public function createNew(
+        string $eventName,
+        EventInterface $event,
+        ?Context $context
+    ): LifecycleEventInterface;
 }

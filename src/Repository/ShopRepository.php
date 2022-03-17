@@ -19,7 +19,7 @@ final class ShopRepository extends EntityRepository implements ShopRepositoryInt
             ->where('shop.shopId = :shopId')
             ->setParameter('shopId', $shopId);
 
-        /* @var ?string */
+        /** @var ?string */
         return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 

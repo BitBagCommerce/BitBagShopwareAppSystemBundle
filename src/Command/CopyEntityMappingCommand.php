@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Command;
 
@@ -27,7 +29,7 @@ final class CopyEntityMappingCommand extends Command
 
         $contents = \file_get_contents(self::VENDOR_ENTITY_MAPPING_FILE_PATH);
 
-        if ($contents === false) {
+        if (false === $contents) {
             $output->error('Loading ' . self::VENDOR_ENTITY_MAPPING_FILE_PATH . ' failed');
 
             return 1;

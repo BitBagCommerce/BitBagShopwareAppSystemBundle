@@ -74,7 +74,7 @@ final class RegistrationController
         $this->entityManager->persist($shop);
         $this->entityManager->flush();
 
-        $proof = \hash_hmac('sha256', $shopId.$shopUrl.$this->appName, $this->appSecret);
+        $proof = \hash_hmac('sha256', $shopId . $shopUrl . $this->appName, $this->appSecret);
         $body = [
             'proof' => $proof,
             'secret' => $secret,

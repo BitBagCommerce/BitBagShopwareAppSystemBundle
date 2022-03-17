@@ -24,8 +24,11 @@ final class AppLifecycleEventController
         $this->eventFactory = $eventFactory;
     }
 
-    public function __invoke(EventInterface $event, string $eventType, ?Context $context): Response
-    {
+    public function __invoke(
+        EventInterface $event,
+        string $eventType,
+        ?Context $context
+    ): Response {
         $event = $this->eventFactory->createNew($eventType, $event, $context);
 
         $this->eventDispatcher->dispatch($event);

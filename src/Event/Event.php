@@ -14,8 +14,12 @@ final class Event implements EventInterface
 
     private array $eventData;
 
-    public function __construct(string $shopUrl, string $shopId, int $appVersion, array $eventData)
-    {
+    public function __construct(
+        string $shopUrl,
+        string $shopId,
+        int $appVersion,
+        array $eventData
+    ) {
         $this->shopUrl = $shopUrl;
         $this->shopId = $shopId;
         $this->appVersion = $appVersion;

@@ -20,24 +20,16 @@ class Shop implements ShopInterface
      */
     protected string $shopId;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    /** @ORM\Column(type="string") */
     protected string $shopUrl;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    /** @ORM\Column(type="string") */
     protected string $shopSecret;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    /** @ORM\Column(type="string", nullable=true) */
     protected ?string $apiKey;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    /** @ORM\Column(type="string", nullable=true) */
     protected ?string $secretKey;
 
     public function getShopId(): string
