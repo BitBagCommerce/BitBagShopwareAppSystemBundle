@@ -12,5 +12,10 @@ interface EventInterface
 
     public function getAppVersion(): int;
 
+    /**
+     * @return EventDataInterface[]
+     */
     public function getEventData(): array;
+
+    public function getSingleEventData(): EventDataInterface;
 }
