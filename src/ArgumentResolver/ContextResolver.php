@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\ArgumentResolver;
 
 use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
 use BitBag\ShopwareAppSystemBundle\Entity\ShopInterface;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
+use BitBag\ShopwareAppSystemBundle\Resolver\Request\AggregateRequestValueResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -19,12 +22,20 @@ final class ContextResolver implements ArgumentValueResolverInterface
 
     private AuthenticatorInterface $authenticator;
 
+    private AggregateRequestValueResolverInterface $shopSecretResolver;
+
+    private AggregateRequestValueResolverInterface $shopIdResolver;
+
     public function __construct(
-        ShopRepositoryInterface $shopRepository,
-        AuthenticatorInterface $authenticator
+        ShopRepositoryInterface                $shopRepository,
+        AuthenticatorInterface                 $authenticator,
+        AggregateRequestValueResolverInterface $shopSecretResolver,
+        AggregateRequestValueResolverInterface $shopIdResolver
     ) {
         $this->shopRepository = $shopRepository;
         $this->authenticator = $authenticator;
+        $this->shopSecretResolver = $shopSecretResolver;
+        $this->shopIdResolver = $shopIdResolver;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
@@ -33,31 +44,13 @@ final class ContextResolver implements ArgumentValueResolverInterface
             return false;
         }
 
-        if ('POST' === $request->getMethod() && $this->supportsPostRequest($request)) {
-            $requestContent = $request->toArray();
+        $shopSecret = $this->shopSecretResolver->resolve($request);
 
-            /** @var array $source */
-            $source = $requestContent['source'];
-
-            /** @var string $shopId */
-            $shopId = $source['shopId'];
-
-            $shopSecret = $this->shopRepository->findSecretByShopId($shopId);
-
-            if (null === $shopSecret) {
-                return false;
-            }
-
-            return $this->authenticator->authenticatePostRequest($request, $shopSecret);
-        } elseif ('GET' === $request->getMethod() && $this->supportsGetRequest($request)) {
-            $shopId = $request->query->get('shop-id', '');
-            $shopSecret = $this->shopRepository->findSecretByShopId($shopId);
-
-            if (null === $shopSecret) {
-                return false;
-            }
-
-            return $this->authenticator->authenticateGetRequest($request, $shopSecret);
+        switch ($request->getMethod()) {
+            case 'POST':
+                return $this->authenticator->authenticatePostRequest($request, $shopSecret);
+            case 'GET':
+                return $this->authenticator->authenticateGetRequest($request, $shopSecret);
         }
 
         return false;
@@ -65,59 +58,11 @@ final class ContextResolver implements ArgumentValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if ('POST' === $request->getMethod()) {
-            $requestContent = $request->toArray();
-
-            /** @var array $source */
-            $source = $requestContent['source'];
-
-            /** @var string $shopId */
-            $shopId = $source['shopId'];
-        } else {
-            /** @var string $shopId */
-            $shopId = $request->query->get('shop-id');
-        }
+        $shopId = $this->shopIdResolver->resolve($request);
 
         $shop = $this->shopRepository->getOneByShopId($shopId);
 
         yield $this->getContext($shop);
-    }
-
-    private function supportsPostRequest(Request $request): bool
-    {
-        /** @var array{source?: array} $requestContent */
-        $requestContent = $request->toArray();
-
-        $hasSource = $requestContent && array_key_exists('source', $requestContent);
-
-        if (!$hasSource) {
-            return false;
-        }
-
-        $requiredKeys = ['url', 'shopId'];
-
-        foreach ($requiredKeys as $key) {
-            if (!array_key_exists($key, $requestContent['source'])) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private function supportsGetRequest(Request $request): bool
-    {
-        $query = $request->query->all();
-
-        $requiredKeys = ['shop-url', 'shop-id', 'shopware-shop-signature', 'timestamp'];
-
-        foreach ($requiredKeys as $key) {
-            if (!array_key_exists($key, $query)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private function getContext(ShopInterface $shop): ?Context
