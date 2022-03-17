@@ -1,0 +1,14 @@
+registration:
+  methods: ['GET']
+  path: /app/registration
+  controller: bitbag.shopware_app_system.controller.registration_controller
+
+confirm_registration:
+  methods: ['POST']
+  path: /app/registration/confirm
+  controller: bitbag.shopware_skeleton_app.controller.confirmation_controller
+
+app_lifecycle:
+  methods: ['POST']
+  path: /app/lifecycle/{eventType}
+  controller: bitbag.shopware_app_system.controller.app_lifecycle_event_controller

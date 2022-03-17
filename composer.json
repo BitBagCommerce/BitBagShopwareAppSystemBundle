@@ -1,0 +1,53 @@
+{
+    "name": "bitbag/shopware-app-system-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "description": "",
+    "require": {
+        "php": "^7.4",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "ext-json": "*",
+        "doctrine/orm": "^2.11",
+        "symfony/console": "^5.4",
+        "symfony/event-dispatcher": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/validator": "^5.4",
+        "symfony/yaml": "^5.4",
+        "twig/twig": "^3.3",
+        "vin-sw/shopware-sdk": "^1.4"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "BitBag\\ShopwareAppSystemBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BitBag\\ShopwareAppSystemBundle\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "symfony": {
+            "require": "^5.4"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.5",
+        "pact-foundation/pact-php": "^7.1",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-symfony": "^3.1",
+        "symfony/maker-bundle": "^1.36",
+        "vimeo/psalm": "^4.19"
+    }
+}
