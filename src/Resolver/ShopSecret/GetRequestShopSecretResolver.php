@@ -8,8 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class GetRequestShopSecretResolver implements RequestValueResolverInterface
 {
-    use GetValueNameTrait;
-
     private ShopRepositoryInterface $shopRepository;
 
     public function __construct(ShopRepositoryInterface $shopRepository)

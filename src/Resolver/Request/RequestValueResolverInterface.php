@@ -9,6 +9,4 @@ interface RequestValueResolverInterface
     public function supports(Request $request): bool;
 
     public function resolve(Request $request): ?string;
-
-    public function getValueName(): string;
 }

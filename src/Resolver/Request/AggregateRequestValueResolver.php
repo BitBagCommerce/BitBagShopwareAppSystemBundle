@@ -8,10 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 final class AggregateRequestValueResolver implements AggregateRequestValueResolverInterface
 {
     private iterable $resolvers;
+    private string $valueName;
 
-    public function __construct(iterable $resolvers)
+    public function __construct(iterable $resolvers, string $valueName)
     {
         $this->resolvers = $resolvers;
+        $this->valueName = $valueName;
     }
 
     public function resolve(Request $request): string
@@ -28,7 +30,7 @@ final class AggregateRequestValueResolver implements AggregateRequestValueResolv
         }
 
         if (null === $value) {
-            throw new UnresolvedRequestDataException($resolver->getValueName());
+            throw new UnresolvedRequestDataException($this->valueName);
         }
 
         return $value;

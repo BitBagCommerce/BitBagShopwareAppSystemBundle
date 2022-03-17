@@ -26,6 +26,7 @@
                  id="bitbag.shopware_app_system.resolver.request.aggregate_shop_secret_resolver"
         >
             <argument type="tagged_iterator" tag="bitbag.shopware_app_system.resolver.shop_secret"/>
+            <argument type="string" key="$valueName">shop secret</argument>
         </service>
 
 
@@ -45,6 +46,7 @@
                  id="bitbag.shopware_app_system.resolver.request.aggregate_shop_id_resolver"
         >
             <argument type="tagged_iterator" tag="bitbag.shopware_app_system.resolver.shop_id"/>
+            <argument type="string" key="$valueName">shop id</argument>
         </service>
     </services>
 </container>

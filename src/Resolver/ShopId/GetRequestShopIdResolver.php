@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class GetRequestShopIdResolver implements RequestValueResolverInterface
 {
-    use GetValueNameTrait;
-
     public function supports(Request $request): bool
     {
         return 'GET' === $request->getMethod();
