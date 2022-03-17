@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Resolver\ShopSecret;
 
@@ -15,22 +17,9 @@ final class PostRequestShopSecretResolver implements RequestValueResolverInterfa
         $this->shopRepository = $shopRepository;
     }
 
-    public function resolve(Request $request): ?string
-    {
-        $requestContent = $request->toArray();
-
-        /** @var array $source */
-        $source = $requestContent['source'];
-
-        /** @var string $shopId */
-        $shopId =  $source['shopId'] ?? '';
-
-        return $this->shopRepository->findSecretByShopId($shopId);
-    }
-
     public function supports(Request $request): bool
     {
-        if ($request->getMethod() !== 'POST') {
+        if ('POST' !== $request->getMethod()) {
             return false;
         }
 
@@ -52,5 +41,18 @@ final class PostRequestShopSecretResolver implements RequestValueResolverInterfa
         }
 
         return true;
+    }
+
+    public function resolve(Request $request): ?string
+    {
+        $requestContent = $request->toArray();
+
+        /** @var array $source */
+        $source = $requestContent['source'];
+
+        /** @var string $shopId */
+        $shopId = $source['shopId'] ?? '';
+
+        return $this->shopRepository->findSecretByShopId($shopId);
     }
 }

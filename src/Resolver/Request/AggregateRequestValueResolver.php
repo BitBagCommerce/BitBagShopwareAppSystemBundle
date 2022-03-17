@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Resolver\Request;
 
@@ -8,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class AggregateRequestValueResolver implements AggregateRequestValueResolverInterface
 {
     private iterable $resolvers;
+
     private string $valueName;
 
     public function __construct(iterable $resolvers, string $valueName)

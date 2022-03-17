@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Resolver\ShopId;
 
@@ -19,7 +21,6 @@ final class PostRequestShopIdResolver implements RequestValueResolverInterface
         /** @var array $source */
         $source = $requestContent['source'] ?? [];
 
-        /** @var string $shopId */
         return $source['shopId'] ?? null;
     }
 }

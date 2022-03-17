@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Exception;
 
@@ -9,7 +11,8 @@ final class UnresolvedRequestDataException extends BadRequestHttpException
     public function __construct(string $valueName)
     {
         parent::__construct(\sprintf(
-            'Request does not contain required value: %s', $valueName
+            'Request does not contain required value: %s',
+            $valueName
         ));
     }
 }

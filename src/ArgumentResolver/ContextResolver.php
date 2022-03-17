@@ -27,8 +27,8 @@ final class ContextResolver implements ArgumentValueResolverInterface
     private AggregateRequestValueResolverInterface $shopIdResolver;
 
     public function __construct(
-        ShopRepositoryInterface                $shopRepository,
-        AuthenticatorInterface                 $authenticator,
+        ShopRepositoryInterface $shopRepository,
+        AuthenticatorInterface $authenticator,
         AggregateRequestValueResolverInterface $shopSecretResolver,
         AggregateRequestValueResolverInterface $shopIdResolver
     ) {
