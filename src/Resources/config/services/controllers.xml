@@ -13,7 +13,7 @@
         </service>
 
         <service class="BitBag\ShopwareAppSystemBundle\Controller\ConfirmationController"
-                 id="bitbag.shopware_skeleton_app.controller.confirmation_controller"
+                 id="bitbag.shopware_app_system.controller.confirmation_controller"
                  public="true"
         >
             <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
@@ -29,7 +29,7 @@
                  public="true"
         >
             <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
-            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="router"/>
 

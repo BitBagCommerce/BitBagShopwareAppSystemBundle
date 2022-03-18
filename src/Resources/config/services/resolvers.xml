@@ -1,0 +1,52 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\EventData\EventDataResolver"
+                 id="bitbag_shopware_app_system.resolver.event_data.event_data_resolver"
+        />
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\ShopSecret\GetRequestShopSecretResolver"
+                 id="bitbag.shopware_app_system.resolver.shop_secret.get_request_shop_secret_resolver"
+        >
+            <argument id="bitbag.shopware_app_system.repository.shop_repository" type="service"/>
+
+            <tag name="bitbag.shopware_app_system.resolver.shop_secret"/>
+        </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\ShopSecret\PostRequestShopSecretResolver"
+                 id="bitbag.shopware_app_system.resolver.shop_secret.post_request_shop_request_resolver"
+        >
+            <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
+
+            <tag name="bitbag.shopware_app_system.resolver.shop_secret"/>
+        </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\Request\AggregateRequestValueResolver"
+                 id="bitbag.shopware_app_system.resolver.request.aggregate_shop_secret_resolver"
+        >
+            <argument type="tagged_iterator" tag="bitbag.shopware_app_system.resolver.shop_secret"/>
+            <argument type="string" key="$valueName">shop secret</argument>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\ShopId\GetRequestShopIdResolver"
+                 id="bitbag_shopware_app_system.resolver.shop_id.get_request_shop_id_resolver"
+        >
+            <tag name="bitbag.shopware_app_system.resolver.shop_id"/>
+        </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\ShopId\PostRequestShopIdResolver"
+                 id="bitbag.shopware_app_system.resolver.shop_id.post_request_shop_id_resolver"
+        >
+            <tag name="bitbag.shopware_app_system.resolver.shop_id"/>
+        </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\Request\AggregateRequestValueResolver"
+                 id="bitbag.shopware_app_system.resolver.request.aggregate_shop_id_resolver"
+        >
+            <argument type="tagged_iterator" tag="bitbag.shopware_app_system.resolver.shop_id"/>
+            <argument type="string" key="$valueName">shop id</argument>
+        </service>
+    </services>
+</container>

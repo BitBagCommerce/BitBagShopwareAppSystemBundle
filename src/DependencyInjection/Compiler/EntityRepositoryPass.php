@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\DependencyInjection\Compiler;
 
@@ -61,13 +63,6 @@ final class EntityRepositoryPass implements CompilerPassInterface
             ));
         }
 
-        try {
-            return \json_decode($contents, true);
-        } catch (\JsonException $e) {
-            throw new InvalidEntityMappingException(\sprintf(
-                'Invalid entity mapping found at %s',
-                self::ENTITY_MAPPING
-            ));
-        }
+        return \json_decode($contents, true);
     }
 }

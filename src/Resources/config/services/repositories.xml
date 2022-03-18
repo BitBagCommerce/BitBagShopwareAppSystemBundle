@@ -3,10 +3,18 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service
-                class="BitBag\ShopwareAppSystemBundle\Repository\ShopRepository" id="bitbag.shopware_app_system.repository.shop_repository"
+                class="BitBag\ShopwareAppSystemBundle\Repository\ShopRepository"
+                id="bitbag.shopware_app_system.repository.shop_repository"
         >
-            <argument type="service" id="doctrine"/>
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="bitbag.shopware_app_system.entity.shop_metadata"/>
         </service>
 
+        <service
+                class="Doctrine\ORM\Mapping\ClassMetadata"
+                id="bitbag.shopware_app_system.entity.shop_metadata"
+        >
+            <argument>BitBag\ShopwareAppSystemBundle\Entity\Shop</argument>
+        </service>
     </services>
 </container>

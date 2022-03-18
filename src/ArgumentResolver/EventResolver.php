@@ -8,6 +8,7 @@ use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
 use BitBag\ShopwareAppSystemBundle\Event\Event;
 use BitBag\ShopwareAppSystemBundle\Event\EventInterface;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
+use BitBag\ShopwareAppSystemBundle\Resolver\EventData\EventDataResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -18,12 +19,16 @@ final class EventResolver implements ArgumentValueResolverInterface
 
     private AuthenticatorInterface $authenticator;
 
+    private EventDataResolverInterface $eventDataResolver;
+
     public function __construct(
         ShopRepositoryInterface $shopRepository,
-        AuthenticatorInterface $authenticator
+        AuthenticatorInterface $authenticator,
+        EventDataResolverInterface $eventDataResolver
     ) {
         $this->shopRepository = $shopRepository;
         $this->authenticator = $authenticator;
+        $this->eventDataResolver = $eventDataResolver;
     }
 
     /* @psalm-suppress PossiblyUndefinedArrayOffset */
@@ -81,7 +86,7 @@ final class EventResolver implements ArgumentValueResolverInterface
         $shopUrl = $requestContent['source']['url'];
         $shopId = $requestContent['source']['shopId'];
         $appVersion = (int) $requestContent['source']['appVersion'];
-        $eventData = $requestContent['data'];
+        $eventData = $this->eventDataResolver->resolve($requestContent['data']);
 
         yield new Event($shopUrl, $shopId, $appVersion, $eventData);
     }

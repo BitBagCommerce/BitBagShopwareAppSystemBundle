@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Event;
 
+use BitBag\ShopwareAppSystemBundle\Exception\EmptyEventDataException;
+
 final class Event implements EventInterface
 {
     private string $shopUrl;
@@ -41,8 +43,20 @@ final class Event implements EventInterface
         return $this->appVersion;
     }
 
+    /**
+     * @return EventDataInterface[]
+     */
     public function getEventData(): array
     {
         return $this->eventData;
+    }
+
+    public function getSingleEventData(): EventDataInterface
+    {
+        if (0 === \count($this->eventData)) {
+            throw new EmptyEventDataException();
+        }
+
+        return $this->eventData[0];
     }
 }
