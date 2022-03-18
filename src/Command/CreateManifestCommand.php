@@ -86,7 +86,7 @@ final class CreateManifestCommand extends Command
             return \sprintf(
                 '%s%s%s',
                 $pathInfo['dirname'],
-                DIRECTORY_SEPARATOR,
+                \DIRECTORY_SEPARATOR,
                 $pathInfo['basename']
             );
         }
@@ -94,9 +94,9 @@ final class CreateManifestCommand extends Command
         return \sprintf(
             '%s%s%s%s%s',
             $pathInfo['dirname'],
-            DIRECTORY_SEPARATOR,
+            \DIRECTORY_SEPARATOR,
             $pathInfo['basename'],
-            DIRECTORY_SEPARATOR,
+            \DIRECTORY_SEPARATOR,
             'manifest.xml'
         );
     }
@@ -106,7 +106,7 @@ final class CreateManifestCommand extends Command
      */
     private function createDestinationDir(array $pathInfo): void
     {
-        if ((\array_key_exists('extension', $pathInfo) && \is_dir($pathInfo['dirname'])) || (!\array_key_exists('extension', $pathInfo) && \is_dir($pathInfo['dirname'].DIRECTORY_SEPARATOR.$pathInfo['filename']))) {
+        if ((\array_key_exists('extension', $pathInfo) && \is_dir($pathInfo['dirname'])) || (!\array_key_exists('extension', $pathInfo) && \is_dir($pathInfo['dirname'] . \DIRECTORY_SEPARATOR . $pathInfo['filename']))) {
             return;
         }
 
@@ -116,7 +116,7 @@ final class CreateManifestCommand extends Command
             $pathName = \sprintf(
                 '%s%s%s',
                 $pathInfo['dirname'],
-                DIRECTORY_SEPARATOR,
+                \DIRECTORY_SEPARATOR,
                 $pathInfo['filename']
             );
 

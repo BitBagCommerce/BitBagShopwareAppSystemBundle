@@ -43,6 +43,7 @@
         }
     },
     "require-dev": {
+        "bitbag/coding-standard": "^1.0",
         "friendsofphp/php-cs-fixer": "^3.5",
         "pact-foundation/pact-php": "^7.1",
         "phpunit/phpunit": "^9.5",

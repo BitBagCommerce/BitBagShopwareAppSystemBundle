@@ -16,8 +16,11 @@ use Vin\ShopwareSdk\Data\Context;
 
 final class LifecycleEventFactory implements LifecycleEventFactoryInterface
 {
-    public function createNew(string $eventName, EventInterface $event, ?Context $context): LifecycleEventInterface
-    {
+    public function createNew(
+        string $eventName,
+        EventInterface $event,
+        ?Context $context
+    ): LifecycleEventInterface {
         switch ($eventName) {
             case 'deactivated':
                 return new AppDeactivatedEvent($event);
@@ -25,7 +28,7 @@ final class LifecycleEventFactory implements LifecycleEventFactoryInterface
                 return new AppDeletedEvent($event);
         }
 
-        if ($context === null) {
+        if (null === $context) {
             throw new UnresolvedContextException();
         }
 
@@ -38,6 +41,6 @@ final class LifecycleEventFactory implements LifecycleEventFactoryInterface
                 return new AppUpdatedEvent($event, $context);
         }
 
-        throw new \InvalidArgumentException(\sprintf("Wrong event name: %s.", $eventName));
+        throw new \InvalidArgumentException(\sprintf('Invalid event name: %s.', $eventName));
     }
 }

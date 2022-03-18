@@ -54,7 +54,7 @@ final class EntityRepositoryPass implements CompilerPassInterface
     {
         $contents = \file_get_contents(self::ENTITY_MAPPING);
 
-        if ($contents === false) {
+        if (false === $contents) {
             throw new InvalidEntityMappingException(\sprintf(
                 'File at %s could not be read.',
                 self::ENTITY_MAPPING

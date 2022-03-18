@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Controller;
 
 use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
-use BitBag\ShopwareAppSystemBundle\Exception\ShopNotFoundException;
 use BitBag\ShopwareAppSystemBundle\Entity\ShopInterface;
+use BitBag\ShopwareAppSystemBundle\Exception\ShopNotFoundException;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,8 +83,11 @@ final class ConfirmationController
         ]);
     }
 
-    private function updateShop(ShopInterface $shop, string $apiKey, string $secretKey): void
-    {
+    private function updateShop(
+        ShopInterface $shop,
+        string $apiKey,
+        string $secretKey
+    ): void {
         $shop->setApiKey($apiKey);
         $shop->setSecretKey($secretKey);
 
