@@ -62,7 +62,7 @@ final class ResponseSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $attributeValue = $request->attributes->get(self::SIGNED_CONTROLLER_ATTRIBUTE, false);
 
-        if (false === $attributeValue) {
+        if (!$attributeValue) {
             return;
         }
 

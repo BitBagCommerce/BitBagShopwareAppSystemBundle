@@ -53,7 +53,7 @@ final class Event implements EventInterface
 
     public function getSingleEventData(): EventDataInterface
     {
-        if (0 === \count($this->eventData)) {
+        if (empty($this->eventData[0])) {
             throw new EmptyEventDataException();
         }
 

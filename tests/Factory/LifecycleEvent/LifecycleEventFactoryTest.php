@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\Factory\LifecycleEvent;
 
@@ -24,7 +26,6 @@ final class LifecycleEventFactoryTest extends TestCase
     {
         $this->lifecycleEventFactory = new LifecycleEventFactory();
         $this->shopwareEvent = $this->createMock(EventInterface::class);
-
     }
 
     /** @dataProvider eventDataWithoutContextProvider */
@@ -33,7 +34,8 @@ final class LifecycleEventFactoryTest extends TestCase
         $event = $this->lifecycleEventFactory->createNew(
             $eventName,
             $this->shopwareEvent,
-            null)
+            null
+        )
         ;
 
         self::assertEquals($eventClass, \get_class($event));
@@ -45,7 +47,8 @@ final class LifecycleEventFactoryTest extends TestCase
         $event = $this->lifecycleEventFactory->createNew(
             $eventName,
             $this->shopwareEvent,
-            $this->createMock(Context::class))
+            $this->createMock(Context::class)
+        )
         ;
 
         self::assertEquals($eventClass, \get_class($event));
