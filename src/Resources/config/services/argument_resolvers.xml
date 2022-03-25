@@ -7,13 +7,13 @@
         >
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
-            <argument type="service" id="bitbag_shopware_app_system.resolver.event_data.event_data_resolver"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.event_data.event_data_resolver"/>
 
             <tag name="controller.argument_value_resolver"/>
         </service>
 
         <service class="BitBag\ShopwareAppSystemBundle\ArgumentResolver\ContextResolver"
-                 id="bitbag_shopware_app_system.argument_resolver.context_resolver"
+                 id="bitbag.shopware_app_system.argument_resolver.context_resolver"
         >
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>

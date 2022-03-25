@@ -3,7 +3,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service class="BitBag\ShopwareAppSystemBundle\Resolver\EventData\EventDataResolver"
-                 id="bitbag_shopware_app_system.resolver.event_data.event_data_resolver"
+                 id="bitbag.shopware_app_system.resolver.event_data.event_data_resolver"
         />
 
         <service class="BitBag\ShopwareAppSystemBundle\Resolver\ShopSecret\GetRequestShopSecretResolver"
@@ -31,7 +31,7 @@
 
 
         <service class="BitBag\ShopwareAppSystemBundle\Resolver\ShopId\GetRequestShopIdResolver"
-                 id="bitbag_shopware_app_system.resolver.shop_id.get_request_shop_id_resolver"
+                 id="bitbag.shopware_app_system.resolver.shop_id.get_request_shop_id_resolver"
         >
             <tag name="bitbag.shopware_app_system.resolver.shop_id"/>
         </service>

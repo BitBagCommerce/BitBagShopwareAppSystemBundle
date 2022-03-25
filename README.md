@@ -15,7 +15,7 @@ This bundle provides a set of useful components that you can use in your apps:
 
 1. Controller argument resolvers
   - `bitbag.shopware_app_system.argument_resolver.event_resolver` and
-  - `bitbag_shopware_app_system.argument_resolver.context_resolver`
+  - `bitbag.shopware_app_system.argument_resolver.context_resolver`
 
 These two are used to provide context and event objects for controller actions:
 
