@@ -74,3 +74,7 @@ jobs:
       -
         name: Run PHPUnit
         run: vendor/bin/phpunit --colors=always
+
+      -
+        name: Run ecs
+        run: vendor/bin/ecs check tests/ src/ --config ecs.php

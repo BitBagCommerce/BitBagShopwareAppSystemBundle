@@ -72,7 +72,7 @@ final class EventResolver implements ArgumentValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): \Generator
     {
-        /** @var array{
+        /** @psalm-var array{
          *     source: array{
          *          url: string,
          *          appVersion: string,

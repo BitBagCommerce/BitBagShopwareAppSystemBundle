@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\Resolver\EventData;
 
@@ -16,8 +18,14 @@ final class EventDataResolverTest extends TestCase
     }
 
     /** @dataProvider provideEventData */
-    public function testResolve(array $data, string $event, string $entity, string $operation, string $primaryKey, array $updatedFields): void
-    {
+    public function testResolve(
+        array $data,
+        string $event,
+        string $entity,
+        string $operation,
+        string $primaryKey,
+        array $updatedFields
+    ): void {
         $eventDataCollection = $this->eventDataResolver->resolve($data);
         $eventData = $eventDataCollection[0] ?? null;
 
@@ -43,7 +51,7 @@ final class EventDataResolverTest extends TestCase
                             'updatedFields' => [],
                         ],
                     ],
-                ], 'product.written', 'product', 'delete', '7b04ebe416db4ebc93de4d791325e1d9', []
+                ], 'product.written', 'product', 'delete', '7b04ebe416db4ebc93de4d791325e1d9', [],
             ],
         ];
     }
