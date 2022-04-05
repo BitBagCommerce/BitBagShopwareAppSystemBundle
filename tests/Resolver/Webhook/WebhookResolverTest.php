@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\Resolver\Webhook;
 
-use BitBag\ShopwareAppSystemBundle\Factory\Serializer\SerializerFactory;
-use BitBag\ShopwareAppSystemBundle\Factory\Serializer\SerializerFactoryInterface;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Event;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
 use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolver;
 use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolverInterface;
+use BitBag\ShopwareAppSystemBundle\Serializer\Serializer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
 
 final class WebhookResolverTest extends TestCase
 {
     private string $payload;
 
-    private SerializerFactoryInterface $serializerFactory;
+    private SerializerInterface $serializer;
 
     private WebhookResolverInterface $webhookResolver;
 
     protected function setUp(): void
     {
         $this->payload = $this->createPayload();
-        $this->serializerFactory = new SerializerFactory();
-        $this->webhookResolver = new WebhookResolver($this->serializerFactory);
+        $this->serializer = new Serializer();
+        $this->webhookResolver = new WebhookResolver($this->serializer);
     }
 
     public function testResolve(): void

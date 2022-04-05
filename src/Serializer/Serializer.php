@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareAppSystemBundle\Factory\Serializer;
+namespace BitBag\ShopwareAppSystemBundle\Serializer;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -14,12 +14,14 @@ use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Serializer as BaseSerializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-final class SerializerFactory implements SerializerFactoryInterface
+final class Serializer implements SerializerInterface
 {
-    public function create(): SerializerInterface
+    private SerializerInterface $serializer;
+
+    public function __construct()
     {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
@@ -31,6 +33,16 @@ final class SerializerFactory implements SerializerFactoryInterface
             new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, null, $extractor),
         ];
 
-        return new Serializer($normalizer, $encoder);
+        $this->serializer = new BaseSerializer($normalizer, $encoder);;
+    }
+
+    public function serialize($data, string $format, array $context = []): string
+    {
+        return $this->serializer->serialize($data, $format, $context);
+    }
+
+    public function deserialize($data, string $type, string $format, array $context = [])
+    {
+        return $this->serializer->deserialize($data, $type, $format, $context);
     }
 }
