@@ -48,5 +48,12 @@
             <argument type="tagged_iterator" tag="bitbag.shopware_app_system.resolver.shop_id"/>
             <argument type="string" key="$valueName">shop id</argument>
         </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolver"
+                 id="bitbag.shopware_app_system.resolver.webhook.webhook_resolver"
+        >
+            <argument type="service" id="bitbag.shopware_app_system.factory.serializer.serializer_factory"/>
+        </service>
+
     </services>
 </container>
