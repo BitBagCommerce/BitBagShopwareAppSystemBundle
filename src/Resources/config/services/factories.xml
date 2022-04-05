@@ -5,5 +5,9 @@
         <service class="BitBag\ShopwareAppSystemBundle\Factory\LifecycleEvent\LifecycleEventFactory"
                  id="bitbag.shopware_app_system.factory.lifecycle_event.lifecycle_event_factory"
         />
+
+        <service class="BitBag\ShopwareAppSystemBundle\Factory\Serializer\SerializerFactory"
+                 id="bitbag.shopware_app_system.factory.serializer.serializer_factory"
+        />
     </services>
 </container>
