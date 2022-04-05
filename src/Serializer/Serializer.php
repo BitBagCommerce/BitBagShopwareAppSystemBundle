@@ -33,15 +33,24 @@ final class Serializer implements SerializerInterface
             new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, null, $extractor),
         ];
 
-        $this->serializer = new BaseSerializer($normalizer, $encoder);;
+        $this->serializer = new BaseSerializer($normalizer, $encoder);
     }
 
-    public function serialize($data, string $format, array $context = []): string
+    public function serialize(
+        $data,
+        string $format,
+        array $context = []
+    ): string
     {
         return $this->serializer->serialize($data, $format, $context);
     }
 
-    public function deserialize($data, string $type, string $format, array $context = [])
+    public function deserialize(
+        $data,
+        string $type,
+        string $format,
+        array $context = []
+    )
     {
         return $this->serializer->deserialize($data, $type, $format, $context);
     }

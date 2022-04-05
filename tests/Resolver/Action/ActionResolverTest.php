@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\Resolver\Action;
 
@@ -27,7 +29,6 @@ final class ActionResolverTest extends TestCase
         self::assertInstanceOf(Source::class, $this->action->getSource());
         self::assertInstanceOf(Data::class, $this->action->getData());
         self::assertInstanceOf(Meta::class, $this->action->getMeta());
-
     }
 
     public function testSource(): void
@@ -37,8 +38,6 @@ final class ActionResolverTest extends TestCase
         self::assertEquals('1.0.0', $source->getAppVersion());
         self::assertEquals('F0nWInXj5Xyr', $source->getShopId());
     }
-
-
 
     public function testData(): void
     {
