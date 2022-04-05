@@ -36,9 +36,9 @@ final class ActionResolver implements ArgumentValueResolverInterface
             return false;
         }
 
-        $json = $request->toArray();
+        $requestContent = $request->toArray();
 
-        $shopId = $json['source']['shopId'];
+        $shopId = $requestContent['source']['shopId'];
 
         $shopSecret = $this->shopRepository->findSecretByShopId($shopId);
 
