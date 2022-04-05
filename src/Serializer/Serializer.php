@@ -40,8 +40,7 @@ final class Serializer implements SerializerInterface
         $data,
         string $format,
         array $context = []
-    ): string
-    {
+    ): string {
         return $this->serializer->serialize($data, $format, $context);
     }
 
@@ -50,8 +49,7 @@ final class Serializer implements SerializerInterface
         string $type,
         string $format,
         array $context = []
-    )
-    {
+    ) {
         return $this->serializer->deserialize($data, $type, $format, $context);
     }
 }
