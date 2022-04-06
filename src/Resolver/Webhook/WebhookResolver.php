@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Resolver\Webhook;
 
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -17,7 +18,7 @@ final class WebhookResolver implements WebhookResolverInterface
         $this->serializer = $serializer;
     }
 
-    public function resolve(Request $request): Webhook
+    public function resolve(Request $request): WebhookInterface
     {
         return $this->serializer->deserialize(
             $request->getContent(),

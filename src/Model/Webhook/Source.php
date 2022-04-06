@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Model\Webhook;
 
 /** @psalm-suppress MissingConstructor */
-final class Source
+final class Source implements SourceInterface
 {
     private string $url;
 

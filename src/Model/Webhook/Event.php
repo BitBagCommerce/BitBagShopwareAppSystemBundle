@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Model\Webhook;
 
 /** @psalm-suppress MissingConstructor */
-final class Event
+final class Event implements EventInterface
 {
     /** @var Payload[] */
     private array $payload;

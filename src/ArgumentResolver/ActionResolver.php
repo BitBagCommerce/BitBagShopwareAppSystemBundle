@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\ArgumentResolver;
 
 use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
-use BitBag\ShopwareAppSystemBundle\Model\Action\Action;
+use BitBag\ShopwareAppSystemBundle\Model\Action\ActionInterface;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use BitBag\ShopwareAppSystemBundle\Resolver\Action\ActionResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ final class ActionResolver implements ArgumentValueResolverInterface
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        if (Action::class !== $argument->getType()) {
+        if (ActionInterface::class !== $argument->getType()) {
             return false;
         }
 
