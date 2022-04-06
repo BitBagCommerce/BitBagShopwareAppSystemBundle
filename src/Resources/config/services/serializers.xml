@@ -2,8 +2,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service class="BitBag\ShopwareAppSystemBundle\Factory\LifecycleEvent\LifecycleEventFactory"
-                 id="bitbag.shopware_app_system.factory.lifecycle_event.lifecycle_event_factory"
+        <service class="BitBag\ShopwareAppSystemBundle\Serializer\Serializer"
+                 id="bitbag.shopware_app_system.serializer.serializer"
         />
     </services>
 </container>
