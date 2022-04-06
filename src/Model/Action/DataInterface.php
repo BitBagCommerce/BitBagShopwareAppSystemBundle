@@ -11,5 +11,4 @@ interface DataInterface
     public function getEntity(): string;
 
     public function getAction(): string;
-
 }
