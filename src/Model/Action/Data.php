@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Model\Action;
 
 /** @psalm-suppress MissingConstructor */
-final class Data
+final class Data implements DataInterface
 {
     private array $ids;
 

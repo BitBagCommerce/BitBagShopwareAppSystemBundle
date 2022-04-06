@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Model\Action;
 
 /** @psalm-suppress MissingConstructor */
-final class Meta
+final class Meta implements MetaInterface
 {
     private int $timestamp;
 

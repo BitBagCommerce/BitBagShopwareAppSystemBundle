@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Model\Action;
 
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Source;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\SourceInterface;
 
 /** @psalm-suppress MissingConstructor */
-final class Action
+final class Action implements ActionInterface
 {
-    private Source $source;
+    private SourceInterface $source;
 
     private Meta $meta;
 
     private Data $data;
 
-    public function getSource(): Source
+    public function getSource(): SourceInterface
     {
         return $this->source;
     }
@@ -25,7 +26,7 @@ final class Action
         $this->source = $source;
     }
 
-    public function getMeta(): Meta
+    public function getMeta(): MetaInterface
     {
         return $this->meta;
     }
@@ -35,7 +36,7 @@ final class Action
         $this->meta = $meta;
     }
 
-    public function getData(): Data
+    public function getData(): DataInterface
     {
         return $this->data;
     }

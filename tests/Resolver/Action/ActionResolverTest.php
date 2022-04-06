@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\Tests\Resolver\Action;
 
 use BitBag\ShopwareAppSystemBundle\Model\Action\Action;
-use BitBag\ShopwareAppSystemBundle\Model\Action\Data;
-use BitBag\ShopwareAppSystemBundle\Model\Action\Meta;
-use BitBag\ShopwareAppSystemBundle\Model\Webhook\Source;
+use BitBag\ShopwareAppSystemBundle\Model\Action\ActionInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Action\DataInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Action\MetaInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\SourceInterface;
 use BitBag\ShopwareAppSystemBundle\Resolver\Action\ActionResolver;
 use BitBag\ShopwareAppSystemBundle\Serializer\Serializer;
 use PHPUnit\Framework\TestCase;
@@ -25,10 +26,10 @@ final class ActionResolverTest extends TestCase
 
     public function testInstances(): void
     {
-        self::assertInstanceOf(Action::class, $this->action);
-        self::assertInstanceOf(Source::class, $this->action->getSource());
-        self::assertInstanceOf(Data::class, $this->action->getData());
-        self::assertInstanceOf(Meta::class, $this->action->getMeta());
+        self::assertInstanceOf(ActionInterface::class, $this->action);
+        self::assertInstanceOf(SourceInterface::class, $this->action->getSource());
+        self::assertInstanceOf(DataInterface::class, $this->action->getData());
+        self::assertInstanceOf(MetaInterface::class, $this->action->getMeta());
     }
 
     public function testSource(): void

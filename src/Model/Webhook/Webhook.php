@@ -7,16 +7,16 @@ namespace BitBag\ShopwareAppSystemBundle\Model\Webhook;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /** @psalm-suppress MissingConstructor */
-final class Webhook
+final class Webhook implements WebhookInterface
 {
     /** @SerializedName("data") */
     private Event $event;
 
-    private Source $source;
+    private SourceInterface $source;
 
     private int $timestamp;
 
-    public function getEvent(): Event
+    public function getEvent(): EventInterface
     {
         return $this->event;
     }
@@ -26,7 +26,7 @@ final class Webhook
         $this->event = $event;
     }
 
-    public function getSource(): Source
+    public function getSource(): SourceInterface
     {
         return $this->source;
     }
