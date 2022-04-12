@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\Factory\LifecycleEvent;
 
-use BitBag\ShopwareAppSystemBundle\Event\EventInterface;
 use BitBag\ShopwareAppSystemBundle\Exception\UnresolvedContextException;
 use BitBag\ShopwareAppSystemBundle\Factory\LifecycleEvent\LifecycleEventFactory;
 use BitBag\ShopwareAppSystemBundle\Factory\LifecycleEvent\LifecycleEventFactoryInterface;
@@ -13,6 +12,7 @@ use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppDeactivatedEvent;
 use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppDeletedEvent;
 use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppInstalledEvent;
 use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppUpdatedEvent;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 use PHPUnit\Framework\TestCase;
 use Vin\ShopwareSdk\Data\Context;
 
@@ -20,12 +20,12 @@ final class LifecycleEventFactoryTest extends TestCase
 {
     private LifecycleEventFactoryInterface $lifecycleEventFactory;
 
-    private EventInterface $shopwareEvent;
+    private WebhookInterface $webhook;
 
     protected function setUp(): void
     {
         $this->lifecycleEventFactory = new LifecycleEventFactory();
-        $this->shopwareEvent = $this->createMock(EventInterface::class);
+        $this->webhook = $this->createMock(WebhookInterface::class);
     }
 
     /** @dataProvider eventDataWithoutContextProvider */
@@ -33,7 +33,7 @@ final class LifecycleEventFactoryTest extends TestCase
     {
         $event = $this->lifecycleEventFactory->createNew(
             $eventName,
-            $this->shopwareEvent,
+            $this->webhook,
             null
         )
         ;
@@ -46,7 +46,7 @@ final class LifecycleEventFactoryTest extends TestCase
     {
         $event = $this->lifecycleEventFactory->createNew(
             $eventName,
-            $this->shopwareEvent,
+            $this->webhook,
             $this->createMock(Context::class)
         )
         ;
@@ -60,7 +60,7 @@ final class LifecycleEventFactoryTest extends TestCase
 
         $this->lifecycleEventFactory->createNew(
             'activated',
-            $this->shopwareEvent,
+            $this->webhook,
             null
         );
     }

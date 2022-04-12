@@ -10,7 +10,6 @@ use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolver;
 use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolverInterface;
 use BitBag\ShopwareAppSystemBundle\Serializer\Serializer;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class WebhookResolverTest extends TestCase
@@ -30,12 +29,7 @@ final class WebhookResolverTest extends TestCase
 
     public function testResolve(): void
     {
-        $request = $this->createMock(Request::class);
-        $request
-            ->method('getContent')
-            ->willReturn($this->payload);
-
-        $webhook = $this->webhookResolver->resolve($request);
+        $webhook = $this->webhookResolver->resolve($this->payload);
 
         self::assertInstanceOf(Webhook::class, $webhook);
         self::assertInstanceOf(Event::class, $webhook->getEvent());
