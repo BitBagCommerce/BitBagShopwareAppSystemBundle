@@ -6,13 +6,16 @@ namespace BitBag\ShopwareAppSystemBundle\Entity;
 
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @psalm-suppress MissingConstructor
+ *
  * @ORM\Entity(repositoryClass=ShopRepository::class)
  * @ORM\Table(name="shop")
- * @psalm-suppress MissingConstructor
  */
-class Shop implements ShopInterface
+class Shop implements ShopInterface, UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -80,5 +83,34 @@ class Shop implements ShopInterface
     public function setSecretKey(?string $secretKey): void
     {
         $this->secretKey = $secretKey;
+    }
+
+    public function getRoles(): array
+    {
+        return [];
+    }
+
+    public function getPassword(): string
+    {
+        return $this->shopSecret;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+    }
+
+    public function getUsername(): string
+    {
+        return $this->shopId;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->shopId;
     }
 }

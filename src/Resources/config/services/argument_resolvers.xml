@@ -2,12 +2,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service class="BitBag\ShopwareAppSystemBundle\ArgumentResolver\EventResolver"
+        <service class="BitBag\ShopwareAppSystemBundle\ArgumentResolver\WebhookResolver"
                  id="bitbag.shopware_app_system.argument_resolver.event_resolver"
         >
-            <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
-            <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
-            <argument type="service" id="bitbag.shopware_app_system.resolver.event_data.event_data_resolver"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.webhook.webhook_resolver"/>
 
             <tag name="controller.argument_value_resolver"/>
         </service>
