@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle\ArgumentResolver;
 
 use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
-use BitBag\ShopwareAppSystemBundle\Entity\ShopInterface;
+use BitBag\ShopwareAppSystemBundle\Factory\Context\ContextFactoryInterface;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use BitBag\ShopwareAppSystemBundle\Resolver\Request\AggregateRequestValueResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-use Vin\ShopwareSdk\Client\AdminAuthenticator;
-use Vin\ShopwareSdk\Client\GrantType\ClientCredentialsGrantType;
 use Vin\ShopwareSdk\Data\Context;
-use Vin\ShopwareSdk\Exception\AuthorizationFailedException;
 
 final class ContextResolver implements ArgumentValueResolverInterface
 {
@@ -26,16 +23,20 @@ final class ContextResolver implements ArgumentValueResolverInterface
 
     private AggregateRequestValueResolverInterface $shopIdResolver;
 
+    private ContextFactoryInterface $contextFactory;
+
     public function __construct(
         ShopRepositoryInterface $shopRepository,
         AuthenticatorInterface $authenticator,
         AggregateRequestValueResolverInterface $shopSecretResolver,
-        AggregateRequestValueResolverInterface $shopIdResolver
+        AggregateRequestValueResolverInterface $shopIdResolver,
+        ContextFactoryInterface $contextFactory
     ) {
         $this->shopRepository = $shopRepository;
         $this->authenticator = $authenticator;
         $this->shopSecretResolver = $shopSecretResolver;
         $this->shopIdResolver = $shopIdResolver;
+        $this->contextFactory = $contextFactory;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
@@ -62,25 +63,6 @@ final class ContextResolver implements ArgumentValueResolverInterface
 
         $shop = $this->shopRepository->getOneByShopId($shopId);
 
-        yield $this->getContext($shop);
-    }
-
-    private function getContext(ShopInterface $shop): ?Context
-    {
-        $authenticator = new AdminAuthenticator(new ClientCredentialsGrantType(
-            $shop->getApiKey() ?? '',
-            $shop->getSecretKey() ?? ''
-        ), $shop->getShopUrl());
-
-        try {
-            $token = $authenticator->fetchAccessToken();
-        } catch (AuthorizationFailedException $e) {
-            return null;
-        }
-
-        return new Context(
-            $shop->getShopUrl(),
-            $token
-        );
+        yield $this->contextFactory->create($shop);
     }
 }
