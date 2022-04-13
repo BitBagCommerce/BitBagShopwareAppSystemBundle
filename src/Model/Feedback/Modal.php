@@ -10,8 +10,7 @@ final class Modal implements FeedbackInterface
         private string $iframeUrl,
         private bool $expand,
         private string $size = ModalSize::MEDIUM
-    )
-    {
+    ) {
     }
 
     public function getPayload(): array
