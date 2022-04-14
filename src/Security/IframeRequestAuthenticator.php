@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Security;
 
@@ -17,7 +19,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 final class IframeRequestAuthenticator extends AbstractAuthenticator
 {
     public function __construct(private ShopRepositoryInterface $shopRepository)
-    {}
+    {
+    }
 
     public function supports(Request $request): ?bool
     {
@@ -55,7 +58,11 @@ final class IframeRequestAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($shopId));
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+    public function onAuthenticationSuccess(
+        Request $request,
+        TokenInterface $token,
+        string $firewallName
+    ): ?Response
     {
         return null;
     }
