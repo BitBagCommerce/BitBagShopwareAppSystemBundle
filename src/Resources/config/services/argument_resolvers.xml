@@ -17,10 +17,11 @@
         >
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
-
-            <tag name="controller.argument_value_resolver"/>
             <argument type="service" id="bitbag.shopware_app_system.resolver.request.aggregate_shop_secret_resolver"/>
             <argument type="service" id="bitbag.shopware_app_system.resolver.request.aggregate_shop_id_resolver"/>
+            <argument type="service" id="bitbag.shopware_app_system.factory.context.context_factory"/>
+
+            <tag name="controller.argument_value_resolver"/>
         </service>
 
         <service class="BitBag\ShopwareAppSystemBundle\ArgumentResolver\ActionResolver"
