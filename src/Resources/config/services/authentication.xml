@@ -13,5 +13,12 @@
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="bitbag.shopware_app_system.resolver.webhook.webhook_resolver"/>
         </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Security\IframeRequestAuthenticator"
+                 id="bitbag.shopware_app_system.security.iframe_request_authenticator"
+        >
+            <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
+        </service>
+
     </services>
 </container>
