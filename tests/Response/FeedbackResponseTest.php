@@ -19,6 +19,6 @@ final class FeedbackResponseTest extends TestCase
         $content = $response->getContent();
         $expectedJson = '{"actionType":"notification","payload":{"status":"error","message":"Could not perform action"}}';
 
-        assertEquals($expectedJson, $content);
+        self::assertEquals($expectedJson, $content);
     }
 }
