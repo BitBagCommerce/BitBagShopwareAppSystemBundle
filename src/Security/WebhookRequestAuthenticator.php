@@ -33,11 +33,7 @@ final class WebhookRequestAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        if ('POST' !== $request->getMethod()) {
-            return false;
-        }
-
-        return true;
+        return 'POST' === $request->getMethod();
     }
 
     public function authenticate(Request $request): Passport
@@ -53,14 +49,14 @@ final class WebhookRequestAuthenticator extends AbstractAuthenticator
         $shopSecret = $this->shopRepository->findSecretByShopId($shopId);
 
         if (null === $shopSecret) {
-            throw new UnauthorizedHttpException('');
+            throw new UnauthorizedHttpException('shopSecret');
         }
 
         $hmac = \hash_hmac('sha256', $request->getContent(), $shopSecret);
         $signature = $this->getShopSignature($request) ?? '';
 
         if (!\hash_equals($hmac, $signature)) {
-            throw new UnauthorizedHttpException('');
+            throw new UnauthorizedHttpException('shopware-shop-signature');
         }
 
         return new SelfValidatingPassport(new UserBadge($shopId));
