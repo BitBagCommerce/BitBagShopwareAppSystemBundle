@@ -62,8 +62,7 @@ final class IframeRequestAuthenticator extends AbstractAuthenticator
         Request $request,
         TokenInterface $token,
         string $firewallName
-    ): ?Response
-    {
+    ): ?Response {
         return null;
     }
 
