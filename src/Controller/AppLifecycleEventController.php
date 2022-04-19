@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Controller;
 
-use BitBag\ShopwareAppSystemBundle\Event\EventInterface;
 use BitBag\ShopwareAppSystemBundle\Factory\LifecycleEvent\LifecycleEventFactoryInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Vin\ShopwareSdk\Data\Context;
@@ -25,11 +25,11 @@ final class AppLifecycleEventController
     }
 
     public function __invoke(
-        EventInterface $event,
+        WebhookInterface $webhook,
         string $eventType,
         ?Context $context
     ): Response {
-        $event = $this->eventFactory->createNew($eventType, $event, $context);
+        $event = $this->eventFactory->createNew($eventType, $webhook, $context);
 
         $this->eventDispatcher->dispatch($event);
 

@@ -32,7 +32,7 @@ final class LifecycleEventSubscriber implements EventSubscriberInterface
 
     public function onAppDeleted(AppDeletedEvent $event): void
     {
-        $shopId = $event->getShopwareEvent()->getShopId();
+        $shopId = $event->getWebhook()->getSource()->getShopId();
         $shop = $this->shopRepository->getOneByShopId($shopId);
 
         $this->entityManager->remove($shop);

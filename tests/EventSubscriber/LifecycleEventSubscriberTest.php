@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\EventSubscriber;
 
-use BitBag\ShopwareAppSystemBundle\Event\EventInterface;
 use BitBag\ShopwareAppSystemBundle\EventSubscriber\LifecycleEventSubscriber;
 use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppDeletedEvent;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\Source;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
@@ -33,12 +34,12 @@ final class LifecycleEventSubscriberTest extends TestCase
 
     public function testOnAppDeleted(): void
     {
-        $shopwareEvent = $this->createMock(EventInterface::class);
-        $shopwareEvent
-            ->method('getShopId')
-            ->willReturn(self::SHOP_ID);
+        $webhook = new Webhook();
+        $source = new Source();
+        $source->setShopId(self::SHOP_ID);
+        $webhook->setSource($source);
 
-        $appDeletedEvent = new AppDeletedEvent($shopwareEvent);
+        $appDeletedEvent = new AppDeletedEvent($webhook);
 
         $this->shopRepository
             ->expects(self::once())

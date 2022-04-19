@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\LifecycleEvent;
 
-use BitBag\ShopwareAppSystemBundle\Event\EventInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractLifecycleEvent extends Event implements LifecycleEventInterface
 {
-    private EventInterface $event;
+    private WebhookInterface $webhook;
 
-    public function __construct(EventInterface $event)
+    public function __construct(WebhookInterface $webhook)
     {
-        $this->event = $event;
+        $this->webhook = $webhook;
     }
 
-    public function getShopwareEvent(): EventInterface
+    public function getWebhook(): WebhookInterface
     {
-        return $this->event;
+        return $this->webhook;
     }
 }

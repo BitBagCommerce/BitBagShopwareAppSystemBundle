@@ -28,7 +28,6 @@
                  id="bitbag.shopware_app_system.controller.registration_controller"
                  public="true"
         >
-            <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="router"/>

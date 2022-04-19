@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\LifecycleEvent;
 
-use BitBag\ShopwareAppSystemBundle\Event\EventInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 
 interface LifecycleEventInterface
 {
-    public function getShopwareEvent(): EventInterface;
+    public function getWebhook(): WebhookInterface;
 }

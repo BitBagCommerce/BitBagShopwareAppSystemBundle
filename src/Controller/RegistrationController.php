@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Controller;
 
-use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
 use BitBag\ShopwareAppSystemBundle\Entity\Shop;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,12 +11,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class RegistrationController
 {
-    private AuthenticatorInterface $authenticator;
-
     private EntityManagerInterface $entityManager;
 
     private ShopRepositoryInterface $shopRepository;
@@ -29,14 +27,12 @@ final class RegistrationController
     private string $appSecret;
 
     public function __construct(
-        AuthenticatorInterface $authenticator,
         EntityManagerInterface $entityManager,
         ShopRepositoryInterface $shopRepository,
         UrlGeneratorInterface $urlGenerator,
         string $appName,
         string $appSecret
     ) {
-        $this->authenticator = $authenticator;
         $this->entityManager = $entityManager;
         $this->shopRepository = $shopRepository;
         $this->urlGenerator = $urlGenerator;
@@ -46,14 +42,12 @@ final class RegistrationController
 
     public function __invoke(Request $request): Response
     {
-        if (!$this->authenticator->authenticateRegisterRequest($request)) {
-            return new Response(null, 401);
-        }
+        $this->authenticate($request);
 
         $shopUrl = $this->getShopUrl($request);
         $shopId = $this->getShopId($request);
 
-        if (null === $shopUrl || null === $shopId) {
+        if ('' === $shopUrl || '' === $shopId) {
             throw new BadRequestHttpException('Missing query parameters.');
         }
 
@@ -84,13 +78,25 @@ final class RegistrationController
         return new JsonResponse($body);
     }
 
-    private function getShopUrl(Request $request): ?string
+    private function getShopUrl(Request $request): string
     {
-        return $request->query->get('shop-url');
+        return $request->query->get('shop-url', '');
     }
 
-    private function getShopId(Request $request): ?string
+    private function getShopId(Request $request): string
     {
-        return $request->query->get('shop-id');
+        return $request->query->get('shop-id', '');
+    }
+
+    private function authenticate(Request $request): void
+    {
+        $signature = $request->headers->get('shopware-app-signature', '');
+        $queryString = \rawurldecode($request->getQueryString() ?? '');
+
+        $hmac = \hash_hmac('sha256', $queryString, $this->appSecret);
+
+        if (!\hash_equals($hmac, $signature)) {
+            throw new UnauthorizedHttpException('');
+        }
     }
 }
