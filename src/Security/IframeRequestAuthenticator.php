@@ -29,26 +29,26 @@ final class IframeRequestAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+        $query = $request->query;
         /** @var string $shopId */
-        $shopId = $request->request->get('shop-id', '');
+        $shopId = $query->get('shop-id', '');
         $shopSecret = $this->shopRepository->findSecretByShopId($shopId);
 
         if (null === $shopSecret) {
             throw new UnauthorizedHttpException('');
         }
 
-        $query = $request->query->all();
-
+        $queryArray = $query->all();
         /** @var string|null $shopSignature */
-        $shopSignature = $query['shopware-shop-signature'];
+        $shopSignature = $queryArray['shopware-shop-signature'];
 
         if (null === $shopSignature) {
             throw new UnauthorizedHttpException('shopware-shop-signature');
         }
 
-        unset($query['shopware-shop-signature']);
-        $queryString = \http_build_query($query);
+        unset($queryArray['shopware-shop-signature']);
 
+        $queryString = \urldecode(\http_build_query($queryArray));
         $hmac = \hash_hmac('sha256', $queryString, $shopSecret);
 
         if (!\hash_equals($hmac, $shopSignature)) {
