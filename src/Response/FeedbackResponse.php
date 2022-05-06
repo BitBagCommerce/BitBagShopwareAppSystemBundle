@@ -10,8 +10,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /** @psalm-suppress PropertyNotSetInConstructor */
 final class FeedbackResponse extends JsonResponse
 {
-    public function __construct(FeedbackInterface $actionFeedback)
+    public function __construct(private FeedbackInterface $actionFeedback)
     {
         parent::__construct($actionFeedback->getPayload());
+    }
+
+    public function getActionFeedback(): FeedbackInterface
+    {
+        return $this->actionFeedback;
     }
 }

@@ -13,16 +13,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class ResponseSubscriber implements EventSubscriberInterface
 {
-    private ShopRepositoryInterface $shopRepository;
-
-    private AggregateRequestValueResolverInterface $shopIdResolver;
-
     public function __construct(
-        ShopRepositoryInterface $shopRepository,
-        AggregateRequestValueResolverInterface $shopIdResolver
+        private ShopRepositoryInterface $shopRepository,
+        private AggregateRequestValueResolverInterface $shopIdResolver,
     ) {
-        $this->shopRepository = $shopRepository;
-        $this->shopIdResolver = $shopIdResolver;
     }
 
     public static function getSubscribedEvents(): array

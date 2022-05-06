@@ -23,4 +23,14 @@ class Notification implements FeedbackInterface
             ],
         ];
     }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
 }
