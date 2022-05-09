@@ -27,6 +27,7 @@ final class ShopRepository extends EntityRepository implements ShopRepositoryInt
 
     public function getOneByShopId(string $shopId): ShopInterface
     {
+        /** @var ShopInterface|null $shop */
         $shop = $this->find($shopId);
 
         if (null === $shop) {

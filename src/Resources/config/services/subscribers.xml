@@ -2,7 +2,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-
         <service class="BitBag\ShopwareAppSystemBundle\EventSubscriber\LifecycleEventSubscriber"
                  id="bitbag.shopware_app_system.event_subscriber.lifecycle_event_subscriber"
         >
@@ -20,6 +19,5 @@
 
             <tag name="kernel.event_subscriber"/>
         </service>
-
     </services>
 </container>
