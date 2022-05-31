@@ -49,7 +49,7 @@ final class Serializer implements SerializerInterface
         string $type,
         string $format,
         array $context = []
-    ) {
+    ): mixed {
         return $this->serializer->deserialize($data, $type, $format, $context);
     }
 }

@@ -26,7 +26,7 @@ final class BitBagShopwareAppSystemExtension extends Extension
         $this->appAppCredentials($container, $config);
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'bitbag_shopware_app_system';
     }

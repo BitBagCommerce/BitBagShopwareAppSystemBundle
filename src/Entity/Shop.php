@@ -95,7 +95,7 @@ class Shop implements ShopInterface, UserInterface, PasswordAuthenticatedUserInt
         return $this->shopSecret;
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
