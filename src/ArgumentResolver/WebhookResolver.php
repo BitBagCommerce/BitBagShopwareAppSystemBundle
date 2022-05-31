@@ -4,36 +4,29 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\ArgumentResolver;
 
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
-use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolver as RequestWebhookResolver;
+use BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 final class WebhookResolver implements ArgumentValueResolverInterface
 {
-    private RequestWebhookResolver $webhookResolver;
+    private ModelResolverInterface $modelResolver;
 
-    public function __construct(RequestWebhookResolver $webhookResolver)
+    public function __construct(ModelResolverInterface $webhookResolver)
     {
-        $this->webhookResolver = $webhookResolver;
+        $this->modelResolver = $webhookResolver;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        if (WebhookInterface::class !== $argument->getType()) {
-            return false;
-        }
-
-        if ('POST' !== $request->getMethod()) {
-            return false;
-        }
-
-        return true;
+        return WebhookInterface::class === $argument->getType();
     }
 
     public function resolve(Request $request, ArgumentMetadata $argument): \Generator
     {
-        yield $this->webhookResolver->resolve($request->getContent());
+        yield $this->modelResolver->resolve($request, Webhook::class);
     }
 }

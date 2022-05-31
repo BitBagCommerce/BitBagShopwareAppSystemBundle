@@ -45,14 +45,8 @@
             <argument type="string" key="$valueName">shop id</argument>
         </service>
 
-        <service class="BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolver"
-                 id="bitbag.shopware_app_system.resolver.webhook.webhook_resolver"
-        >
-            <argument type="service" id="bitbag.shopware_app_system.serializer.serializer"/>
-        </service>
-
-        <service class="BitBag\ShopwareAppSystemBundle\Resolver\Action\ActionResolver"
-                 id="bitbag.shopware_app_system.resolver.action.action_resolver"
+        <service class="BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolver"
+                 id="bitbag.shopware_app_system.resolver.model.model_resolver"
         >
             <argument type="service" id="bitbag.shopware_app_system.serializer.serializer"/>
         </service>
