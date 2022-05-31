@@ -11,7 +11,7 @@
                  id="bitbag.shopware_app_system.security.webhook_request_authenticator"
         >
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
-            <argument type="service" id="bitbag.shopware_app_system.resolver.webhook.webhook_resolver"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.model.model_resolver"/>
         </service>
 
         <service class="BitBag\ShopwareAppSystemBundle\Security\IframeRequestAuthenticator"
