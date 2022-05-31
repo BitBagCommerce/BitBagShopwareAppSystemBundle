@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Security;
 
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
-use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolverInterface;
+use BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolverInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +22,14 @@ final class WebhookRequestAuthenticator extends AbstractAuthenticator
 {
     protected ShopRepositoryInterface $shopRepository;
 
-    private WebhookResolverInterface $webhookResolver;
+    private ModelResolverInterface $modelResolver;
 
     public function __construct(
         ShopRepositoryInterface $shopRepository,
-        WebhookResolverInterface $webhookResolver
+        ModelResolverInterface $modelResolver
     ) {
         $this->shopRepository = $shopRepository;
-        $this->webhookResolver = $webhookResolver;
+        $this->modelResolver = $modelResolver;
     }
 
     public function supports(Request $request): ?bool
@@ -38,13 +39,12 @@ final class WebhookRequestAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $requestContent = $request->getContent();
-
-        if (empty($requestContent)) {
+        if (empty($request->getContent())) {
             throw new UnauthorizedHttpException('');
         }
 
-        $webhook = $this->webhookResolver->resolve($request->getContent());
+        /** @var Webhook $webhook */
+        $webhook = $this->modelResolver->resolve($request, Webhook::class);
         $shopId = $webhook->getSource()->getShopId();
         $shopSecret = $this->shopRepository->findSecretByShopId($shopId);
 

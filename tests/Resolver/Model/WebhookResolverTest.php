@@ -2,47 +2,59 @@
 
 declare(strict_types=1);
 
-namespace BitBag\ShopwareAppSystemBundle\Tests\Resolver\Webhook;
+namespace BitBag\ShopwareAppSystemBundle\Tests\Resolver\Model;
 
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Event;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
-use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolver;
-use BitBag\ShopwareAppSystemBundle\Resolver\Webhook\WebhookResolverInterface;
+use BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolver;
 use BitBag\ShopwareAppSystemBundle\Serializer\Serializer;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 final class WebhookResolverTest extends TestCase
 {
-    private string $payload;
-
-    private SerializerInterface $serializer;
-
-    private WebhookResolverInterface $webhookResolver;
+    private Webhook $webhook;
 
     protected function setUp(): void
     {
-        $this->payload = $this->createPayload();
-        $this->serializer = new Serializer();
-        $this->webhookResolver = new WebhookResolver($this->serializer);
+        $serializer = new Serializer();
+        $request = new Request(
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            $this->createPayload(),
+        );
+        $modelResolver = new ModelResolver($serializer);
+
+        $this->webhook = $modelResolver->resolve($request, Webhook::class);
     }
 
-    public function testResolve(): void
+    public function testInstances(): void
     {
-        $webhook = $this->webhookResolver->resolve($this->payload);
+        self::assertInstanceOf(Webhook::class, $this->webhook);
+        self::assertInstanceOf(Event::class, $this->webhook->getEvent());
+    }
 
-        self::assertInstanceOf(Webhook::class, $webhook);
-        self::assertInstanceOf(Event::class, $webhook->getEvent());
+    public function testWebhook(): void
+    {
+        self::assertEquals(123123123, $this->webhook->getTimestamp());
+    }
 
-        self::assertEquals(123123123, $webhook->getTimestamp());
-
-        $source = $webhook->getSource();
+    public function testSource(): void
+    {
+        $source = $this->webhook->getSource();
 
         self::assertEquals('http://localhost:8000', $source->getUrl());
         self::assertEquals('0.0.1', $source->getAppVersion());
         self::assertEquals('dgrH7nLU6tlE', $source->getShopId());
+    }
 
-        $data = $webhook->getEvent();
+    public function testPayload(): void
+    {
+        $data = $this->webhook->getEvent();
         $payload = $data->getPayload()[0];
 
         self::assertEquals('product', $payload->getEntity());

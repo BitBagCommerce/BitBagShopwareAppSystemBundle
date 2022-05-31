@@ -9,9 +9,10 @@ use BitBag\ShopwareAppSystemBundle\Model\Action\ActionInterface;
 use BitBag\ShopwareAppSystemBundle\Model\Action\DataInterface;
 use BitBag\ShopwareAppSystemBundle\Model\Action\MetaInterface;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\SourceInterface;
-use BitBag\ShopwareAppSystemBundle\Resolver\Action\ActionResolver;
+use BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolver;
 use BitBag\ShopwareAppSystemBundle\Serializer\Serializer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 final class ActionResolverTest extends TestCase
 {
@@ -20,8 +21,18 @@ final class ActionResolverTest extends TestCase
     protected function setUp(): void
     {
         $serializer = new Serializer();
-        $actionResolver = new ActionResolver($serializer);
-        $this->action = $actionResolver->resolve($this->createPayload());
+        $actionResolver = new ModelResolver($serializer);
+        $request = new Request(
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            $this->createPayload(),
+        );
+
+        $this->action = $actionResolver->resolve($request, Action::class);
     }
 
     public function testInstances(): void

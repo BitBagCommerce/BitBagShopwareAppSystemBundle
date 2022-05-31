@@ -5,7 +5,7 @@
         <service class="BitBag\ShopwareAppSystemBundle\ArgumentResolver\WebhookResolver"
                  id="bitbag.shopware_app_system.argument_resolver.event_resolver"
         >
-            <argument type="service" id="bitbag.shopware_app_system.resolver.webhook.webhook_resolver"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.model.model_resolver"/>
 
             <tag name="controller.argument_value_resolver"/>
         </service>
@@ -25,9 +25,8 @@
         <service class="BitBag\ShopwareAppSystemBundle\ArgumentResolver\ActionResolver"
                  id="bitbag.shopware_app_system.argument_resolver.action_resolver"
         >
-            <argument type="service" id="bitbag.shopware_app_system.resolver.action.action_resolver"/>
-            <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
-            <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.model.model_resolver"/>
+
             <tag name="controller.argument_value_resolver"/>
         </service>
     </services>
