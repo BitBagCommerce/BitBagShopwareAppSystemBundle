@@ -21,7 +21,7 @@ final class ContextFactory implements ContextFactoryInterface
 
         try {
             $token = $authenticator->fetchAccessToken();
-        } catch (AuthorizationFailedException $e) {
+        } catch (AuthorizationFailedException) {
             return null;
         }
 

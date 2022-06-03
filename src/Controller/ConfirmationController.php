@@ -4,54 +4,40 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Controller;
 
-use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
 use BitBag\ShopwareAppSystemBundle\Entity\ShopInterface;
 use BitBag\ShopwareAppSystemBundle\Exception\ShopNotFoundException;
+use BitBag\ShopwareAppSystemBundle\Model\Request\ConfirmationRequest;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
+use BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolverInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ConfirmationController
 {
-    private AuthenticatorInterface $authenticator;
-
     private ShopRepositoryInterface $shopRepository;
 
     private EntityManagerInterface $entityManager;
 
-    private ValidatorInterface $validator;
+    private ModelResolverInterface $modelResolver;
 
     public function __construct(
-        AuthenticatorInterface $authenticator,
         ShopRepositoryInterface $shopRepository,
         EntityManagerInterface $entityManager,
-        ValidatorInterface $validator
+        ModelResolverInterface $modelResolver
     ) {
-        $this->authenticator = $authenticator;
         $this->shopRepository = $shopRepository;
         $this->entityManager = $entityManager;
-        $this->validator = $validator;
+        $this->modelResolver = $modelResolver;
     }
 
     public function __invoke(Request $request): Response
     {
-        /** @var array $requestContent */
-        $requestContent = json_decode($request->getContent(), true);
+        /** @var ConfirmationRequest $confirmationRequest */
+        $confirmationRequest = $this->modelResolver->resolve($request, ConfirmationRequest::class);
 
-        $violations = $this->validator->validate($requestContent, $this->getConfirmationRequestConstraint());
-
-        if (0 !== $violations->count()) {
-            throw new BadRequestHttpException('Invalid confirmation request');
-        }
-
-        /** @var string $shopId */
-        $shopId = $requestContent['shopId'];
+        $shopId = $confirmationRequest->getShopId();
         $shop = $this->shopRepository->find($shopId);
 
         if (null === $shop) {
@@ -59,28 +45,18 @@ final class ConfirmationController
         }
 
         $shopSecret = $shop->getShopSecret();
-        if (!$this->authenticator->authenticatePostRequest($request, $shopSecret)) {
+
+        if (!$this->authenticatePostRequest($request, $shopSecret)) {
             throw new UnauthorizedHttpException('');
         }
 
         $this->updateShop(
             $shop,
-            $requestContent['apiKey'],
-            $requestContent['secretKey']
+            $confirmationRequest->getApiKey(),
+            $confirmationRequest->getSecretKey()
         );
 
         return new Response();
-    }
-
-    private function getConfirmationRequestConstraint(): Collection
-    {
-        return new Collection([
-            'apiKey' => new NotBlank(),
-            'secretKey' => new NotBlank(),
-            'timestamp' => new NotBlank(),
-            'shopUrl' => new NotBlank(),
-            'shopId' => new NotBlank(),
-        ]);
     }
 
     private function updateShop(
@@ -93,5 +69,18 @@ final class ConfirmationController
 
         $this->entityManager->persist($shop);
         $this->entityManager->flush();
+    }
+
+    private function authenticatePostRequest(Request $request, string $shopSecret): bool
+    {
+        if (!array_key_exists('shopware-shop-signature', $request->headers->all())) {
+            return false;
+        }
+
+        $signature = $request->headers->get('shopware-shop-signature', '');
+
+        $hmac = \hash_hmac('sha256', $request->getContent(), $shopSecret);
+
+        return \hash_equals($hmac, $signature);
     }
 }

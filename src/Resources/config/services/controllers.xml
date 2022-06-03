@@ -16,10 +16,9 @@
                  id="bitbag.shopware_app_system.controller.confirmation_controller"
                  public="true"
         >
-            <argument type="service" id="bitbag.shopware_app_system.authenticator.authenticator"/>
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="validator"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.model.model_resolver"/>
 
             <tag name="controller.service_arguments"/>
         </service>

@@ -4,65 +4,56 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\ArgumentResolver;
 
-use BitBag\ShopwareAppSystemBundle\Authenticator\AuthenticatorInterface;
 use BitBag\ShopwareAppSystemBundle\Factory\Context\ContextFactoryInterface;
+use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
-use BitBag\ShopwareAppSystemBundle\Resolver\Request\AggregateRequestValueResolverInterface;
+use BitBag\ShopwareAppSystemBundle\Resolver\Model\ModelResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Vin\ShopwareSdk\Data\Context;
 
 final class ContextResolver implements ArgumentValueResolverInterface
 {
     private ShopRepositoryInterface $shopRepository;
 
-    private AuthenticatorInterface $authenticator;
-
-    private AggregateRequestValueResolverInterface $shopSecretResolver;
-
-    private AggregateRequestValueResolverInterface $shopIdResolver;
-
     private ContextFactoryInterface $contextFactory;
+
+    private ModelResolverInterface $modelResolver;
 
     public function __construct(
         ShopRepositoryInterface $shopRepository,
-        AuthenticatorInterface $authenticator,
-        AggregateRequestValueResolverInterface $shopSecretResolver,
-        AggregateRequestValueResolverInterface $shopIdResolver,
-        ContextFactoryInterface $contextFactory
+        ContextFactoryInterface $contextFactory,
+        ModelResolverInterface $modelResolver
     ) {
         $this->shopRepository = $shopRepository;
-        $this->authenticator = $authenticator;
-        $this->shopSecretResolver = $shopSecretResolver;
-        $this->shopIdResolver = $shopIdResolver;
         $this->contextFactory = $contextFactory;
+        $this->modelResolver = $modelResolver;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        if (Context::class !== $argument->getType()) {
-            return false;
-        }
-
-        $shopSecret = $this->shopSecretResolver->resolve($request);
-
-        switch ($request->getMethod()) {
-            case 'POST':
-                return $this->authenticator->authenticatePostRequest($request, $shopSecret);
-            case 'GET':
-                return $this->authenticator->authenticateGetRequest($request, $shopSecret);
-        }
-
-        return false;
+        return Context::class === $argument->getType();
     }
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        $shopId = $this->shopIdResolver->resolve($request);
+        $shopId = match ($request->getMethod()) {
+            'POST' => $this->modelResolver->resolve($request, Webhook::class)
+                ->getSource()
+                ->getShopId(),
+            'GET' => $this->resolveShopIdFromRequestQuery($request),
+            default => throw new MethodNotAllowedHttpException(['POST', 'GET']),
+        };
 
         $shop = $this->shopRepository->getOneByShopId($shopId);
 
         yield $this->contextFactory->create($shop);
+    }
+
+    private function resolveShopIdFromRequestQuery(Request $request): string
+    {
+        return $request->query->get('shop-id', '');
     }
 }
