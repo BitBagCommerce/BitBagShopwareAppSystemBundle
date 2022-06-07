@@ -40,7 +40,7 @@ final class IframeRequestAuthenticator extends AbstractAuthenticator
 
         $queryArray = $query->all();
         /** @var string|null $shopSignature */
-        $shopSignature = $queryArray['shopware-shop-signature'];
+        $shopSignature = $queryArray['shopware-shop-signature'] ?? null;
 
         if (null === $shopSignature) {
             throw new UnauthorizedHttpException('shopware-shop-signature');
