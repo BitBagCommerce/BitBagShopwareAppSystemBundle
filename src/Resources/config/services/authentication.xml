@@ -2,11 +2,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service class="BitBag\ShopwareAppSystemBundle\Authenticator\Authenticator"
-                 id="bitbag.shopware_app_system.authenticator.authenticator">
-            <tag name="bitbag.shopware_app_system.auth_guarded"/>
-        </service>
-
         <service class="BitBag\ShopwareAppSystemBundle\Security\WebhookRequestAuthenticator"
                  id="bitbag.shopware_app_system.security.webhook_request_authenticator"
         >

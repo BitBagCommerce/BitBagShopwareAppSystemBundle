@@ -15,7 +15,7 @@
                  id="bitbag.shopware_app_system.event_subscriber.response_subscriber"
         >
             <argument type="service" id="bitbag.shopware_app_system.repository.shop_repository"/>
-            <argument type="service" id="bitbag.shopware_app_system.resolver.request.aggregate_shop_id_resolver"/>
+            <argument type="service" id="bitbag.shopware_app_system.resolver.model.model_resolver"/>
 
             <tag name="kernel.event_subscriber"/>
         </service>
