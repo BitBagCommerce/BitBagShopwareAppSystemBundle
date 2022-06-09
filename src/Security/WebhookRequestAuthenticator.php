@@ -20,16 +20,10 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 final class WebhookRequestAuthenticator extends AbstractAuthenticator
 {
-    protected ShopRepositoryInterface $shopRepository;
-
-    private ModelResolverInterface $modelResolver;
-
     public function __construct(
-        ShopRepositoryInterface $shopRepository,
-        ModelResolverInterface $modelResolver
+        protected ShopRepositoryInterface $shopRepository,
+        private ModelResolverInterface $modelResolver
     ) {
-        $this->shopRepository = $shopRepository;
-        $this->modelResolver = $modelResolver;
     }
 
     public function supports(Request $request): ?bool
