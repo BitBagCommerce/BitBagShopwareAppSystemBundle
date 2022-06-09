@@ -18,7 +18,7 @@ final class ConfirmationController
 {
     public function __construct(
         private ShopRepositoryInterface $shopRepository,
-        private EntityManagerInterface  $entityManager,
+        private EntityManagerInterface $entityManager,
         private ModelResolverInterface $modelResolver
     ) {
     }

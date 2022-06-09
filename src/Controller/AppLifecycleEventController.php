@@ -13,7 +13,7 @@ use Vin\ShopwareSdk\Data\Context;
 final class AppLifecycleEventController
 {
     public function __construct(
-        private EventDispatcherInterface  $eventDispatcher,
+        private EventDispatcherInterface $eventDispatcher,
         private AppLifecycleEventFactoryInterface $eventFactory
     ) {
     }

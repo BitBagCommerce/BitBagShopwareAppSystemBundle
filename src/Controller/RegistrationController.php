@@ -17,10 +17,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 final class RegistrationController
 {
     public function __construct(
-        private EntityManagerInterface  $entityManager,
+        private EntityManagerInterface $entityManager,
         private ShopRepositoryInterface $shopRepository,
-        private UrlGeneratorInterface   $urlGenerator,
-        private string                  $appName,
+        private UrlGeneratorInterface $urlGenerator,
+        private string $appName,
         private string $appSecret
     ) {
     }
