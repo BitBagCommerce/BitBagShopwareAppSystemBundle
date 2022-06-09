@@ -11,16 +11,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class AppLifecycleEventSubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    private ShopRepositoryInterface $shopRepository;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        ShopRepositoryInterface $shopRepository
+        private EntityManagerInterface $entityManager,
+        private ShopRepositoryInterface $shopRepository
     ) {
-        $this->entityManager = $entityManager;
-        $this->shopRepository = $shopRepository;
     }
 
     public static function getSubscribedEvents(): array
