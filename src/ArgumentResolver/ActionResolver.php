@@ -13,12 +13,9 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 final class ActionResolver implements ArgumentValueResolverInterface
 {
-    private ModelResolverInterface $modelResolver;
-
     public function __construct(
-        ModelResolverInterface $modelResolver
+        private ModelResolverInterface $modelResolver
     ) {
-        $this->modelResolver = $modelResolver;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
