@@ -7,7 +7,7 @@
                  public="true"
         >
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="bitbag.shopware_app_system.factory.lifecycle_event.lifecycle_event_factory"/>
+            <argument type="service" id="bitbag.shopware_app_system.factory.app_lifecycle_event.app_lifecycle_event_factory"/>
 
             <tag name="controller.service_arguments"/>
         </service>

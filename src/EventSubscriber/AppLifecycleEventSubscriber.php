@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\EventSubscriber;
 
-use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppDeletedEvent;
+use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppDeletedEvent;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class LifecycleEventSubscriber implements EventSubscriberInterface
+final class AppLifecycleEventSubscriber implements EventSubscriberInterface
 {
     private EntityManagerInterface $entityManager;
 

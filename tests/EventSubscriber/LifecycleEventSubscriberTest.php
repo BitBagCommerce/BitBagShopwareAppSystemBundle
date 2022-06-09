@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\Tests\EventSubscriber;
 
-use BitBag\ShopwareAppSystemBundle\EventSubscriber\LifecycleEventSubscriber;
-use BitBag\ShopwareAppSystemBundle\LifecycleEvent\AppDeletedEvent;
+use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppDeletedEvent;
+use BitBag\ShopwareAppSystemBundle\EventSubscriber\AppLifecycleEventSubscriber;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Source;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\Webhook;
 use BitBag\ShopwareAppSystemBundle\Repository\ShopRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
+use Vin\ShopwareSdk\Data\Context;
 
 final class LifecycleEventSubscriberTest extends TestCase
 {
@@ -20,13 +21,13 @@ final class LifecycleEventSubscriberTest extends TestCase
 
     private ShopRepositoryInterface $shopRepository;
 
-    private LifecycleEventSubscriber $eventSubscriber;
+    private AppLifecycleEventSubscriber $eventSubscriber;
 
     protected function setUp(): void
     {
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
         $this->shopRepository = $this->createMock(ShopRepositoryInterface::class);
-        $this->eventSubscriber = new LifecycleEventSubscriber(
+        $this->eventSubscriber = new AppLifecycleEventSubscriber(
             $this->entityManager,
             $this->shopRepository
         );
@@ -39,7 +40,9 @@ final class LifecycleEventSubscriberTest extends TestCase
         $source->setShopId(self::SHOP_ID);
         $webhook->setSource($source);
 
-        $appDeletedEvent = new AppDeletedEvent($webhook);
+        $context = $this->createMock(Context::class);
+
+        $appDeletedEvent = new AppDeletedEvent($webhook, $context);
 
         $this->shopRepository
             ->expects(self::once())
