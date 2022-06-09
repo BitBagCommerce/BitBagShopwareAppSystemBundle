@@ -28,7 +28,6 @@ final class CreateManifestCommand extends Command
     public function __construct(private TemplateLoader $twig)
     {
         parent::__construct();
-
     }
 
     protected function configure(): void
