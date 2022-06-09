@@ -16,28 +16,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class RegistrationController
 {
-    private EntityManagerInterface $entityManager;
-
-    private ShopRepositoryInterface $shopRepository;
-
-    private UrlGeneratorInterface $urlGenerator;
-
-    private string $appName;
-
-    private string $appSecret;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        ShopRepositoryInterface $shopRepository,
-        UrlGeneratorInterface $urlGenerator,
-        string $appName,
-        string $appSecret
+        private EntityManagerInterface $entityManager,
+        private ShopRepositoryInterface $shopRepository,
+        private UrlGeneratorInterface $urlGenerator,
+        private string $appName,
+        private string $appSecret
     ) {
-        $this->entityManager = $entityManager;
-        $this->shopRepository = $shopRepository;
-        $this->urlGenerator = $urlGenerator;
-        $this->appName = $appName;
-        $this->appSecret = $appSecret;
     }
 
     public function __invoke(Request $request): Response
