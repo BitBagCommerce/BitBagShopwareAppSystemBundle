@@ -13,11 +13,8 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 final class WebhookResolver implements ArgumentValueResolverInterface
 {
-    private ModelResolverInterface $modelResolver;
-
-    public function __construct(ModelResolverInterface $webhookResolver)
+    public function __construct(private ModelResolverInterface $modelResolver)
     {
-        $this->modelResolver = $webhookResolver;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool

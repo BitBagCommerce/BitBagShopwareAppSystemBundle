@@ -16,20 +16,11 @@ use Vin\ShopwareSdk\Data\Context;
 
 final class ContextResolver implements ArgumentValueResolverInterface
 {
-    private ShopRepositoryInterface $shopRepository;
-
-    private ContextFactoryInterface $contextFactory;
-
-    private ModelResolverInterface $modelResolver;
-
     public function __construct(
-        ShopRepositoryInterface $shopRepository,
-        ContextFactoryInterface $contextFactory,
-        ModelResolverInterface $modelResolver
+        private ShopRepositoryInterface $shopRepository,
+        private ContextFactoryInterface $contextFactory,
+        private ModelResolverInterface $modelResolver
     ) {
-        $this->shopRepository = $shopRepository;
-        $this->contextFactory = $contextFactory;
-        $this->modelResolver = $modelResolver;
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
