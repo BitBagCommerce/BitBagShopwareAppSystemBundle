@@ -25,13 +25,9 @@ final class CreateManifestCommand extends Command
         'License' => 'MIT',
     ];
 
-    private TemplateLoader $twig;
-
-    public function __construct(TemplateLoader $twig)
+    public function __construct(private TemplateLoader $twig)
     {
         parent::__construct();
-
-        $this->twig = $twig;
     }
 
     protected function configure(): void
