@@ -16,20 +16,11 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 final class ConfirmationController
 {
-    private ShopRepositoryInterface $shopRepository;
-
-    private EntityManagerInterface $entityManager;
-
-    private ModelResolverInterface $modelResolver;
-
     public function __construct(
-        ShopRepositoryInterface $shopRepository,
-        EntityManagerInterface $entityManager,
-        ModelResolverInterface $modelResolver
+        private ShopRepositoryInterface $shopRepository,
+        private EntityManagerInterface  $entityManager,
+        private ModelResolverInterface $modelResolver
     ) {
-        $this->shopRepository = $shopRepository;
-        $this->entityManager = $entityManager;
-        $this->modelResolver = $modelResolver;
     }
 
     public function __invoke(Request $request): Response

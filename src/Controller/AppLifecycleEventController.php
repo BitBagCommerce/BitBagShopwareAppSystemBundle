@@ -12,16 +12,10 @@ use Vin\ShopwareSdk\Data\Context;
 
 final class AppLifecycleEventController
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    private AppLifecycleEventFactoryInterface $eventFactory;
-
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        AppLifecycleEventFactoryInterface $eventFactory
+        private EventDispatcherInterface  $eventDispatcher,
+        private AppLifecycleEventFactoryInterface $eventFactory
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->eventFactory = $eventFactory;
     }
 
     public function __invoke(
