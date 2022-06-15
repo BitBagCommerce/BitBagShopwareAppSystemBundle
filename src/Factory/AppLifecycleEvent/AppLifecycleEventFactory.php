@@ -6,9 +6,9 @@ namespace BitBag\ShopwareAppSystemBundle\Factory\AppLifecycleEvent;
 
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppActivatedEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppDeactivatedEvent;
-use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppUninstalledEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppInstalledEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppLifecycleEventInterface;
+use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppUninstalledEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppUpdatedEvent;
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 use Vin\ShopwareSdk\Data\Context;
@@ -18,10 +18,9 @@ final class AppLifecycleEventFactory implements AppLifecycleEventFactoryInterfac
     public function createNew(
         string $eventName,
         WebhookInterface $webhook,
-        ?Context $context
+        ?Context $context = null
     ): AppLifecycleEventInterface {
-        $invalidArg = static fn (string $eventName): mixed =>
-            throw new \InvalidArgumentException(\sprintf('Invalid event name: %s.', $eventName));
+        $invalidArg = static fn (string $eventName): mixed => throw new \InvalidArgumentException(\sprintf('Invalid event name: %s.', $eventName));
 
         if (null !== $context) {
             return match ($eventName) {
