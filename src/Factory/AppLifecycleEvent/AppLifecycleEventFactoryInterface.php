@@ -13,6 +13,6 @@ interface AppLifecycleEventFactoryInterface
     public function createNew(
         string $eventName,
         WebhookInterface $webhook,
-        Context $context
+        ?Context $context
     ): AppLifecycleEventInterface;
 }

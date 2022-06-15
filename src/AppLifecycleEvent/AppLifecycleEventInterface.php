@@ -10,6 +10,4 @@ use Vin\ShopwareSdk\Data\Context;
 interface AppLifecycleEventInterface
 {
     public function getWebhook(): WebhookInterface;
-
-    public function getContext(): Context;
 }

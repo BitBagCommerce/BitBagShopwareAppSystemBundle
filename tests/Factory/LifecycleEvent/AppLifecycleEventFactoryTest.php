@@ -6,7 +6,7 @@ namespace BitBag\ShopwareAppSystemBundle\Tests\Factory\LifecycleEvent;
 
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppActivatedEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppDeactivatedEvent;
-use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppDeletedEvent;
+use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppUninstalledEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppInstalledEvent;
 use BitBag\ShopwareAppSystemBundle\AppLifecycleEvent\AppUpdatedEvent;
 use BitBag\ShopwareAppSystemBundle\Factory\AppLifecycleEvent\AppLifecycleEventFactory;
@@ -46,7 +46,7 @@ final class AppLifecycleEventFactoryTest extends TestCase
             ['installed', AppInstalledEvent::class],
             ['updated', AppUpdatedEvent::class],
             ['deactivated', AppDeactivatedEvent::class],
-            ['deleted', AppDeletedEvent::class],
+            ['deleted', AppUninstalledEvent::class],
         ];
     }
 }
