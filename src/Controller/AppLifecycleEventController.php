@@ -21,7 +21,7 @@ final class AppLifecycleEventController
     public function __invoke(
         WebhookInterface $webhook,
         string $eventType,
-        Context $context
+        ?Context $context
     ): Response {
         $event = $this->eventFactory->createNew($eventType, $webhook, $context);
 

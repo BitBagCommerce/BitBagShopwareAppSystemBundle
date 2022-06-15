@@ -8,7 +8,7 @@ use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 use Vin\ShopwareSdk\Data\Context;
 
-abstract class AbstractAppAppLifecycleEvent extends Event implements AppLifecycleEventInterface
+abstract class AbstractAppLifecycleEvent extends Event implements AppLifecycleEventInterface, ContextAwareLifecycleEventInterface
 {
     public function __construct(
         private WebhookInterface $webhook,

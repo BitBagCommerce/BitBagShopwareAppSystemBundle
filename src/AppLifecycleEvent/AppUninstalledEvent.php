@@ -6,7 +6,7 @@ namespace BitBag\ShopwareAppSystemBundle\AppLifecycleEvent;
 
 use BitBag\ShopwareAppSystemBundle\Model\Webhook\WebhookInterface;
 
-final class AppDeactivatedEvent implements AppLifecycleEventInterface
+final class AppUninstalledEvent implements AppLifecycleEventInterface
 {
     public function __construct(private WebhookInterface $webhook)
     {

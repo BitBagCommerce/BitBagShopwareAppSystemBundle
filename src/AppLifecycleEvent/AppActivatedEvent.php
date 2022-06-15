@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\AppLifecycleEvent;
 
-final class AppActivatedEvent extends AbstractAppAppLifecycleEvent
+final class AppActivatedEvent extends AbstractAppLifecycleEvent
 {
 }
