@@ -1,0 +1,46 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service
+                class="Vin\ShopwareSdk\Service\AdminActionService"
+                id="shopware.api.admin_action_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\AdminSearchService"
+                 id="shopware.api.admin_search_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\InfoService"
+                 id="shopware.api.info_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\MailSendService"
+                 id="shopware.api.mail_send_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\NotificationService"
+                 id="shopware.api.notification_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\StateMachineService"
+                 id="shopware.api.state_machine"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\SyncService"
+                 id="shopware.api.sync_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\SystemConfigService"
+                 id="shopware.api.system_config.service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\UserConfigService"
+                 id="shopware.api.user_config_service"
+        />
+
+        <service class="Vin\ShopwareSdk\Service\UserService"
+                 id="shopware.api.user_service"
+        />
+    </services>
+</container>
