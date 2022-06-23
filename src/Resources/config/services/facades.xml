@@ -1,0 +1,66 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\AdminActionService"
+                 id="shopware.api.admin_action_service"
+        >
+            <argument id="vin.shopware_sdk.service.admin_action_service" type="service"/>
+        </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\AdminSearchService"
+                 id="shopware.api.admin_search_service"
+        >
+            <argument id="vin.shopware_sdk.service.admin_search_service" type="service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\MailSendService"
+                 id="shopware.api.mail_send_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.mail_send_service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\NotificationService"
+                 id="shopware.api.notification_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.notification_service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\StateMachineService"
+                 id="shopware.api.state_machine_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.state_machine_service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\SyncService"
+                 id="shopware.api.sync_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.sync_service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\SystemConfigService"
+                 id="shopware.api.system_config_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.system_config_service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\UserConfigService"
+                 id="shopware.api.user_config_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.user_config_service"/>
+        </service>
+
+
+        <service class="BitBag\ShopwareAppSystemBundle\Facade\Service\UserService"
+                 id="shopware.api.user_service"
+        >
+            <argument type="service" id="vin.shopware_sdk.service.user_service"/>
+        </service>
+    </services>
+</container>
