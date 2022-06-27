@@ -14,11 +14,7 @@ final class RequestListener
     {
         $request = $event->getRequest();
 
-        $userLanguage = match ($request->getMethod()) {
-            'POST' => $request->headers->get(self::KEY_NAME),
-            'GET' => $request->query->get(self::KEY_NAME),
-            default => null
-        };
+        $userLanguage = $request->headers->get(self::KEY_NAME) ?? $request->query->get(self::KEY_NAME);
 
         if (null === $userLanguage) {
             return;
