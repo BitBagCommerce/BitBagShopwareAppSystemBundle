@@ -15,5 +15,13 @@
         >
             <tag name="console.command"/>
         </service>
+
+        <service class="BitBag\ShopwareAppSystemBundle\Command\PurgeShopsCommand"
+                 id="bitbag.shopware_app_system.command.purge_shops_command"
+        >
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>
