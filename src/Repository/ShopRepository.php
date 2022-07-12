@@ -12,17 +12,14 @@ final class ShopRepository extends EntityRepository implements ShopRepositoryInt
 {
     public function findSecretByShopId(string $shopId): ?string
     {
-        $queryBuilder = $this->createQueryBuilder('shop');
-        $queryBuilder
-            ->select('s.shopSecret')
-            ->from('BitBagShopwareAppSystemBundle:Shop', 's')
-            ->where('shop.shopId = :shopId')
-            ->setParameter('shopId', $shopId);
+        /** @var ShopInterface|null $shop */
+        $shop = $this->find($shopId);
 
-        /** @var string|null $result */
-        $result = $queryBuilder->getQuery()->getSingleScalarResult();
+        if (null === $shop) {
+            return null;
+        }
 
-        return $result;
+        return $shop->getShopSecret();
     }
 
     public function getOneByShopId(string $shopId): ShopInterface
