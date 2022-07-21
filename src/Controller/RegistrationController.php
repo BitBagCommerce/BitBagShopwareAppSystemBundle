@@ -21,7 +21,9 @@ final class RegistrationController
         private ShopRepositoryInterface $shopRepository,
         private UrlGeneratorInterface $urlGenerator,
         private string $appName,
-        private string $appSecret
+        private string $appSecret,
+        private string $appUrlBackend,
+        private string $appUrlClient
     ) {
     }
 
