@@ -25,8 +25,13 @@ final class CreateManifestCommand extends Command
         'License' => 'MIT',
     ];
 
-    public function __construct(private TemplateLoader $twig)
-    {
+    public function __construct(
+        private TemplateLoader $twig,
+        private string $appName,
+        private string $appSecret,
+        private string $appUrlBackend,
+        private string $appUrlClient
+    ) {
         parent::__construct();
     }
 
@@ -123,10 +128,10 @@ final class CreateManifestCommand extends Command
     private function getEnvArguments(): array
     {
         return [
-            'APP_NAME' => $_SERVER['APP_NAME'],
-            'APP_SECRET' => $_SERVER['APP_SECRET'],
-            'APP_URL_CLIENT' => $_SERVER['APP_URL_CLIENT'],
-            'APP_URL_BACKEND' => $_SERVER['APP_URL_BACKEND'],
+            'APP_NAME' => $this->appName,
+            'APP_SECRET' => $this->appSecret,
+            'APP_URL_CLIENT' => $this->appUrlClient,
+            'APP_URL_BACKEND' => $this->appUrlBackend,
         ];
     }
 

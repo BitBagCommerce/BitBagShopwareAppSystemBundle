@@ -18,6 +18,8 @@ final class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('app_name')->end()
                 ->scalarNode('app_secret')->end()
+                ->scalarNode('app_url_backend')->end()
+                ->scalarNode('app_url_client')->end()
             ->end()
         ;
 
