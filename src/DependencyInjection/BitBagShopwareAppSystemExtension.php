@@ -23,7 +23,7 @@ final class BitBagShopwareAppSystemExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $this->appAppCredentials($container, $config);
+        $this->addAppConfiguration($container, $config);
     }
 
     public function getAlias(): string
@@ -31,13 +31,16 @@ final class BitBagShopwareAppSystemExtension extends Extension
         return 'bitbag_shopware_app_system';
     }
 
-    private function appAppCredentials(ContainerBuilder $container, array $config): void
+    private function addAppConfiguration(ContainerBuilder $container, array $config): void
     {
         $definitions = $this->getTaggedServices($container, self::TAG_NAME);
 
         foreach ($definitions as $definition) {
-            $definition->setArgument('$appName', $config['app_name']);
-            $definition->setArgument('$appSecret', $config['app_secret']);
+            $definition
+                ->setArgument('$appName', $config['app_name'])
+                ->setArgument('$appSecret', $config['app_secret'])
+                ->setArgument('$appUrlBackend', $config['app_url_backend'])
+                ->setArgument('$appUrlClient', $config['app_url_client']);
         }
     }
 
