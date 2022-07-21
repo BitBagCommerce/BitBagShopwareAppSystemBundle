@@ -8,6 +8,7 @@
             <argument type="service" id="bitbag.shopware_app_system.twig.template_loader"/>
 
             <tag name="console.command"/>
+            <tag name="bitbag.shopware_app_system.app_config.aware"/>
         </service>
 
         <service class="BitBag\ShopwareAppSystemBundle\Command\CopyEntityMappingCommand"

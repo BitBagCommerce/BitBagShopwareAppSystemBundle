@@ -32,7 +32,7 @@
             <argument type="service" id="router"/>
 
             <tag name="controller.service_arguments"/>
-            <tag name="bitbag.shopware_app_system.auth_guarded"/>
+            <tag name="bitbag.shopware_app_system.app_config.aware"/>
         </service>
     </services>
 </container>

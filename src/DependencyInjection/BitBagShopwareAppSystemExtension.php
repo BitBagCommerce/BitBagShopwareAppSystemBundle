@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class BitBagShopwareAppSystemExtension extends Extension
 {
-    private const TAG_NAME = 'bitbag.shopware_app_system.auth_guarded';
+    private const TAG_NAME = 'bitbag.shopware_app_system.app_config.aware';
 
     public function load(array $configs, ContainerBuilder $container): void
     {
