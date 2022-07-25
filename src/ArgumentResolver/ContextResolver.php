@@ -40,7 +40,7 @@ final class ContextResolver implements ArgumentValueResolverInterface
 
         $shop = $this->shopRepository->getOneByShopId($shopId);
 
-        yield $this->contextFactory->create($shop);
+        yield $this->contextFactory->create($shop, $request);
     }
 
     private function resolveShopIdFromRequestQuery(Request $request): string
