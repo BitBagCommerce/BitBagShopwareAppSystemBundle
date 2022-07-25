@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Vin\ShopwareSdk\Data\Context;
+use Vin\ShopwareSdk\Data\Defaults;
 
 final class ContextResolver implements ArgumentValueResolverInterface
 {
@@ -39,8 +40,17 @@ final class ContextResolver implements ArgumentValueResolverInterface
         };
 
         $shop = $this->shopRepository->getOneByShopId($shopId);
+        $context = $this->contextFactory->create($shop);
 
-        yield $this->contextFactory->create($shop, $request);
+        if (null !== $context) {
+            $languageId = $request->headers->get('sw-context-language');
+            $shopwareVersion = $request->headers->get('sw-version');
+
+            $context->languageId = $languageId ?? Defaults::LANGUAGE_SYSTEM;
+            $context->versionId = $shopwareVersion ?? Defaults::LIVE_VERSION;
+        }
+
+        yield $context;
     }
 
     private function resolveShopIdFromRequestQuery(Request $request): string
