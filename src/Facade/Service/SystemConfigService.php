@@ -16,14 +16,22 @@ final class SystemConfigService implements SystemConfigServiceInterface
     {
     }
 
-    public function checkConfiguration(string $domain, Context $context): ApiResponse
+    public function checkConfiguration(
+        string $domain,
+        Context $context,
+        array $headers = []
+    ): ApiResponse
     {
         $this->systemConfigService->setContext($context);
 
         return $this->systemConfigService->checkConfiguration($domain);
     }
 
-    public function getConfiguration(string $domain, Context $context): ApiResponse
+    public function getConfiguration(
+        string $domain,
+        Context $context,
+        array $headers = []
+    ): ApiResponse
     {
         $this->systemConfigService->setContext($context);
 
@@ -33,30 +41,33 @@ final class SystemConfigService implements SystemConfigServiceInterface
     public function getConfigurationValues(
         string $domain,
         Context $context,
-        ?string $salesChannelId = null
+        ?string $salesChannelId = null,
+        array $headers = []
     ): ApiResponse {
         $this->systemConfigService->setContext($context);
 
-        return $this->systemConfigService->getConfigurationValues($domain, $salesChannelId);
+        return $this->systemConfigService->getConfigurationValues($domain, $salesChannelId, $headers);
     }
 
     public function save(
         KeyValuePair $configuration,
         Context $context,
-        ?string $salesChannelId = null
+        ?string $salesChannelId = null,
+        array $headers = []
     ): ApiResponse {
         $this->systemConfigService->setContext($context);
 
-        return $this->systemConfigService->save($configuration, $salesChannelId);
+        return $this->systemConfigService->save($configuration, $salesChannelId, [], $headers);
     }
 
     public function batchSave(
         KeyValuePairs $configs,
         Context $context,
-        ?string $salesChannelId = null
+        ?string $salesChannelId = null,
+        array $headers = []
     ): ApiResponse {
         $this->systemConfigService->setContext($context);
 
-        return $this->systemConfigService->batchSave($configs, $salesChannelId);
+        return $this->systemConfigService->batchSave($configs, $salesChannelId, [], $headers);
     }
 }

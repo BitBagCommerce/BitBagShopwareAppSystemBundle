@@ -12,13 +12,15 @@ interface StateMachineServiceInterface
     public function getState(
         string $entity,
         string $entityId,
-        Context $context
+        Context $context,
+        array $headers = []
     ): ApiResponse;
 
     public function transitionState(
         string $entity,
         string $entityId,
         string $actionName,
-        Context $context
+        Context $context,
+        array $headers = []
     ): void;
 }

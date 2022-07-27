@@ -9,5 +9,9 @@ use Vin\ShopwareSdk\Service\Struct\KeyValuePairs;
 
 interface AdminSearchServiceInterface
 {
-    public function search(KeyValuePairs $criteriaCollection, Context $context): KeyValuePairs;
+    public function search(
+        KeyValuePairs $criteriaCollection,
+        Context $context,
+        array $headers = []
+    ): KeyValuePairs;
 }

@@ -18,10 +18,11 @@ final class AdminActionService implements AdminActionServiceInterface
         string $method,
         string $path,
         Context $context,
-        array $data = []
-    ): ApiResponse {
+        array $data = [],
+        array $headers = [],
+        ): ApiResponse {
         $this->adminActionService->setContext($context);
 
-        return $this->adminActionService->execute($method, $path, $data);
+        return $this->adminActionService->execute($method, $path, $data, $headers);
     }
 }

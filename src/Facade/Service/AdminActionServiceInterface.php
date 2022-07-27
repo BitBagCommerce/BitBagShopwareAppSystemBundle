@@ -13,6 +13,7 @@ interface AdminActionServiceInterface
         string $method,
         string $path,
         Context $context,
-        array $data = []
+        array $data = [],
+        array $headers = []
     ): ApiResponse;
 }

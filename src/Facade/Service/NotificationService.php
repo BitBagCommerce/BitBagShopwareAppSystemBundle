@@ -15,10 +15,14 @@ final class NotificationService implements NotificationServiceInterface
     {
     }
 
-    public function sendNotification(Notification $notification, Context $context): ApiResponse
+    public function sendNotification(
+        Notification $notification,
+        Context $context,
+        array $headers = []
+    ): ApiResponse
     {
         $this->notificationService->setContext($context);
 
-        return $this->notificationService->sendNotification($notification);
+        return $this->notificationService->sendNotification($notification, $headers);
     }
 }

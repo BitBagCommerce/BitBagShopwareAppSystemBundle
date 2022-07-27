@@ -10,7 +10,15 @@ use Vin\ShopwareSdk\Service\Struct\KeyValuePairs;
 
 interface UserConfigServiceInterface
 {
-    public function getConfigMe(array $keys, Context $context): KeyValuePairs;
+    public function getConfigMe(
+        array $keys,
+        Context $context,
+        array $headers = []
+    ): KeyValuePairs;
 
-    public function saveConfigMe(KeyValuePairs $configs, Context $context): ApiResponse;
+    public function saveConfigMe(
+        KeyValuePairs $configs,
+        Context $context,
+        array $headers = []
+    ): ApiResponse;
 }

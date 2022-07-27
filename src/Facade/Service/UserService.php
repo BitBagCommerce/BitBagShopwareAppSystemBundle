@@ -14,62 +14,79 @@ final class UserService implements UserServiceInterface
     {
     }
 
-    public function me(Context $context): UserEntity
+    public function me(Context $context, array $headers = []): UserEntity
     {
         $this->userService->setContext($context);
 
-        return $this->userService->me();
+        return $this->userService->me($headers);
     }
 
-    public function updateMe(Context $context): void
+    public function updateMe(Context $context, array $headers = []): void
     {
         $this->userService->setContext($context);
 
-        $this->userService->updateMe();
+        $this->userService->updateMe($headers);
     }
 
-    public function status(Context $context): void
+    public function status(Context $context, array $headers = []): void
     {
         $this->userService->setContext($context);
 
-        $this->userService->status();
+        $this->userService->status($headers);
     }
 
-    public function upsertUser(string $userId, Context $context): void
+    public function upsertUser(
+        string $userId,
+        Context $context,
+        array $headers = []
+    ): void
     {
         $this->userService->setContext($context);
 
-        $this->userService->upsertUser($userId);
+        $this->userService->upsertUser($userId, $headers);
     }
 
-    public function deleteUser(string $userId, Context $context): void
+    public function deleteUser(
+        string $userId,
+        Context $context,
+        array $headers = []
+    ): void
     {
         $this->userService->setContext($context);
 
-        $this->userService->deleteUser($userId);
+        $this->userService->deleteUser($userId, $headers);
     }
 
-    public function upsertRole(string $roleId, Context $context): void
+    public function upsertRole(
+        string $roleId,
+        Context $context,
+        array $headers = []
+    ): void
     {
         $this->userService->setContext($context);
 
-        $this->userService->upsertRole([], $roleId);
+        $this->userService->upsertRole($headers, $roleId);
     }
 
     public function deleteUserRole(
         string $userId,
         string $roleId,
-        Context $context
+        Context $context,
+        array $headers = []
     ): void {
         $this->userService->setContext($context);
 
-        $this->userService->deleteUserRole($userId, $roleId);
+        $this->userService->deleteUserRole($userId, $roleId, $headers);
     }
 
-    public function deleteRole(string $roleId, Context $context): void
+    public function deleteRole(
+        string $roleId,
+        Context $context,
+        array $headers = []
+    ): void
     {
         $this->userService->setContext($context);
 
-        $this->userService->deleteRole($roleId);
+        $this->userService->deleteRole($roleId, $headers);
     }
 }

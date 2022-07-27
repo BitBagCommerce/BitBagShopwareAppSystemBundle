@@ -15,6 +15,7 @@ interface MailSendServiceInterface
     public function build(
         string $content,
         array $templateData,
-        Context $context
+        Context $context,
+        array $headers = []
     ): ApiResponse;
 }

@@ -10,5 +10,9 @@ use Vin\ShopwareSdk\Service\Struct\SyncPayload;
 
 interface SyncServiceInterface
 {
-    public function sync(SyncPayload $payload, Context $context): ApiResponse;
+    public function sync(
+        SyncPayload $payload,
+        Context $context,
+        array $headers = []
+    ): ApiResponse;
 }

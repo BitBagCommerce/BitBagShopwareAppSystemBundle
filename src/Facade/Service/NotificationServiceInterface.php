@@ -10,5 +10,9 @@ use Vin\ShopwareSdk\Service\Struct\Notification;
 
 interface NotificationServiceInterface
 {
-    public function sendNotification(Notification $notification, Context $context): ApiResponse;
+    public function sendNotification(
+        Notification $notification,
+        Context $context,
+        array $headers = []
+    ): ApiResponse;
 }

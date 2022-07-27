@@ -11,25 +11,36 @@ use Vin\ShopwareSdk\Service\Struct\KeyValuePairs;
 
 interface SystemConfigServiceInterface
 {
-    public function checkConfiguration(string $domain, Context $context): ApiResponse;
+    public function checkConfiguration(
+        string $domain,
+        Context $context,
+        array $headers = []
+    ): ApiResponse;
 
-    public function getConfiguration(string $domain, Context $context): ApiResponse;
+    public function getConfiguration(
+        string $domain,
+        Context $context,
+        array $headers = []
+    ): ApiResponse;
 
     public function getConfigurationValues(
         string $domain,
         Context $context,
-        ?string $salesChannelId = null
+        ?string $salesChannelId = null,
+        array $headers = []
     ): ApiResponse;
 
     public function save(
         KeyValuePair $configuration,
         Context $context,
-        ?string $salesChannelId = null
+        ?string $salesChannelId = null,
+        array $headers = []
     ): ApiResponse;
 
     public function batchSave(
         KeyValuePairs $configs,
         Context $context,
-        ?string $salesChannelId = null
+        ?string $salesChannelId = null,
+        array $headers = []
     ): ApiResponse;
 }
