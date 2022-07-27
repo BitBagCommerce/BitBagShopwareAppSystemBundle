@@ -20,8 +20,7 @@ final class SystemConfigService implements SystemConfigServiceInterface
         string $domain,
         Context $context,
         array $headers = []
-    ): ApiResponse
-    {
+    ): ApiResponse {
         $this->systemConfigService->setContext($context);
 
         return $this->systemConfigService->checkConfiguration($domain);
@@ -31,8 +30,7 @@ final class SystemConfigService implements SystemConfigServiceInterface
         string $domain,
         Context $context,
         array $headers = []
-    ): ApiResponse
-    {
+    ): ApiResponse {
         $this->systemConfigService->setContext($context);
 
         return $this->systemConfigService->getConfiguration($domain);

@@ -19,8 +19,7 @@ final class MailSendService implements MailSendServiceInterface
         Mail $mail,
         Context $context,
         array $headers = []
-    ): ApiResponse
-    {
+    ): ApiResponse {
         $this->mailSendService->setContext($context);
 
         return $this->mailSendService->send($mail, $headers);

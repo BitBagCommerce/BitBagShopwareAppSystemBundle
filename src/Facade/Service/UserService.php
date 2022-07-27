@@ -39,8 +39,7 @@ final class UserService implements UserServiceInterface
         string $userId,
         Context $context,
         array $headers = []
-    ): void
-    {
+    ): void {
         $this->userService->setContext($context);
 
         $this->userService->upsertUser($userId, $headers);
@@ -50,8 +49,7 @@ final class UserService implements UserServiceInterface
         string $userId,
         Context $context,
         array $headers = []
-    ): void
-    {
+    ): void {
         $this->userService->setContext($context);
 
         $this->userService->deleteUser($userId, $headers);
@@ -61,8 +59,7 @@ final class UserService implements UserServiceInterface
         string $roleId,
         Context $context,
         array $headers = []
-    ): void
-    {
+    ): void {
         $this->userService->setContext($context);
 
         $this->userService->upsertRole($headers, $roleId);
@@ -83,8 +80,7 @@ final class UserService implements UserServiceInterface
         string $roleId,
         Context $context,
         array $headers = []
-    ): void
-    {
+    ): void {
         $this->userService->setContext($context);
 
         $this->userService->deleteRole($roleId, $headers);

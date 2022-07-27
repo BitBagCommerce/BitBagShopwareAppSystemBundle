@@ -18,8 +18,7 @@ final class AdminSearchService implements AdminSearchServiceInterface
         KeyValuePairs $criteriaCollection,
         Context $context,
         array $headers = []
-    ): KeyValuePairs
-    {
+    ): KeyValuePairs {
         $this->adminSearchService->setContext($context);
 
         return $this->adminSearchService->search($criteriaCollection, $headers);

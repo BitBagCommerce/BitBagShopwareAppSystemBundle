@@ -19,8 +19,7 @@ final class UserConfigService implements UserConfigServiceInterface
         array $keys,
         Context $context,
         array $headers = []
-    ): KeyValuePairs
-    {
+    ): KeyValuePairs {
         $this->userConfigService->setContext($context);
 
         return $this->userConfigService->getConfigMe($keys, $headers);
@@ -30,8 +29,7 @@ final class UserConfigService implements UserConfigServiceInterface
         KeyValuePairs $configs,
         Context $context,
         array $headers = []
-    ): ApiResponse
-    {
+    ): ApiResponse {
         $this->userConfigService->setContext($context);
 
         return $this->userConfigService->saveConfigMe($configs, [], $headers);
