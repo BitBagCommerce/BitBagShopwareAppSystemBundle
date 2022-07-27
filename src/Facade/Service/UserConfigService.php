@@ -15,17 +15,23 @@ final class UserConfigService implements UserConfigServiceInterface
     {
     }
 
-    public function getConfigMe(array $keys, Context $context): KeyValuePairs
-    {
+    public function getConfigMe(
+        array $keys,
+        Context $context,
+        array $headers = []
+    ): KeyValuePairs {
         $this->userConfigService->setContext($context);
 
-        return $this->userConfigService->getConfigMe($keys);
+        return $this->userConfigService->getConfigMe($keys, $headers);
     }
 
-    public function saveConfigMe(KeyValuePairs $configs, Context $context): ApiResponse
-    {
+    public function saveConfigMe(
+        KeyValuePairs $configs,
+        Context $context,
+        array $headers = []
+    ): ApiResponse {
         $this->userConfigService->setContext($context);
 
-        return $this->userConfigService->saveConfigMe($configs);
+        return $this->userConfigService->saveConfigMe($configs, [], $headers);
     }
 }

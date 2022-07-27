@@ -15,20 +15,24 @@ final class MailSendService implements MailSendServiceInterface
     {
     }
 
-    public function send(Mail $mail, Context $context): ApiResponse
-    {
+    public function send(
+        Mail $mail,
+        Context $context,
+        array $headers = []
+    ): ApiResponse {
         $this->mailSendService->setContext($context);
 
-        return $this->mailSendService->send($mail);
+        return $this->mailSendService->send($mail, $headers);
     }
 
     public function build(
         string $content,
         array $templateData,
-        Context $context
+        Context $context,
+        array $headers = []
     ): ApiResponse {
         $this->mailSendService->setContext($context);
 
-        return $this->mailSendService->build($content, $templateData);
+        return $this->mailSendService->build($content, $templateData, $headers);
     }
 }

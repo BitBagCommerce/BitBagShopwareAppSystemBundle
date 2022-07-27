@@ -9,23 +9,40 @@ use Vin\ShopwareSdk\Data\Entity\User\UserEntity;
 
 interface UserServiceInterface
 {
-    public function me(Context $context): UserEntity;
+    public function me(Context $context, array $headers = []): UserEntity;
 
-    public function updateMe(Context $context): void;
+    public function updateMe(Context $context, array $headers = []): void;
 
-    public function status(Context $context): void;
+    public function status(Context $context, array $headers = []): void;
 
-    public function upsertUser(string $userId, Context $context): void;
+    public function upsertUser(
+        string $userId,
+        Context $context,
+        array $headers = []
+    ): void;
 
-    public function deleteUser(string $userId, Context $context): void;
+    public function deleteUser(
+        string $userId,
+        Context $context,
+        array $headers = []
+    ): void;
 
-    public function upsertRole(string $roleId, Context $context): void;
+    public function upsertRole(
+        string $roleId,
+        Context $context,
+        array $headers = []
+    ): void;
 
     public function deleteUserRole(
         string $userId,
         string $roleId,
-        Context $context
+        Context $context,
+        array $headers = []
     ): void;
 
-    public function deleteRole(string $roleId, Context $context): void;
+    public function deleteRole(
+        string $roleId,
+        Context $context,
+        array $headers = []
+    ): void;
 }

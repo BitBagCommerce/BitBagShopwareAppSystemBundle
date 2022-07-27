@@ -15,10 +15,13 @@ final class SyncService implements SyncServiceInterface
     {
     }
 
-    public function sync(SyncPayload $payload, Context $context): ApiResponse
-    {
+    public function sync(
+        SyncPayload $payload,
+        Context $context,
+        array $headers = []
+    ): ApiResponse {
         $this->syncService->setContext($context);
 
-        return $this->syncService->sync($payload);
+        return $this->syncService->sync($payload, [], $headers);
     }
 }

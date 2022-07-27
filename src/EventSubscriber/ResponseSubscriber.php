@@ -42,7 +42,7 @@ final class ResponseSubscriber implements EventSubscriberInterface
         $shopId = $action->getSource()->getShopId();
         $shop = $this->shopRepository->getOneByShopId($shopId);
 
-        $hmac = hash_hmac('sha256', (string) $response->getContent(), $shop->getShopSecret());
+        $hmac = \hash_hmac('sha256', (string) $response->getContent(), $shop->getShopSecret());
 
         $response->headers->set('shopware-app-signature', $hmac);
     }
