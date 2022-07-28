@@ -38,5 +38,9 @@
         <service class="Vin\ShopwareSdk\Service\UserService"
                  id="vin.shopware_sdk.service.user_service"
         />
+
+        <service class="BitBag\ShopwareAppSystemBundle\Service\DocumentService"
+                 id="bitbag.shopware_app_system.service.document_service"
+        />
     </services>
 </container>
