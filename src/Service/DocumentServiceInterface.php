@@ -24,4 +24,12 @@ interface DocumentServiceInterface
         Context $context,
         string $extension = 'pdf'
     ): ApiResponse;
+
+    public function downloadDocument(
+        string $documentId,
+        string $deepLinkCode,
+        Context $context,
+        bool $download = false,
+        array $headers = ['Accept' => 'application/pdf'],
+        ): string;
 }
