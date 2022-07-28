@@ -18,7 +18,7 @@ final class DocumentService extends AdminActionService implements DocumentServic
 
     private const UPLOAD_DOCUMENT_ENDPOINT = '/api/_action/document/%s/upload?extension=%s&fileName=%s';
 
-    private const DOWNLOAD_DOCUMENT_ENDPOINT = '/api_action/document/%s/%s?download=%s';
+    private const DOWNLOAD_DOCUMENT_ENDPOINT = '/api/_action/document/%s/%s?download=%s';
 
     public function createDocument(
         string $orderId,
