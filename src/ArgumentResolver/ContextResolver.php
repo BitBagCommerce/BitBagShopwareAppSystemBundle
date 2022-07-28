@@ -44,10 +44,8 @@ final class ContextResolver implements ArgumentValueResolverInterface
 
         if (null !== $context) {
             $languageId = $request->headers->get('sw-context-language');
-            $shopwareVersion = $request->headers->get('sw-version');
 
             $context->languageId = $languageId ?? Defaults::LANGUAGE_SYSTEM;
-            $context->versionId = $shopwareVersion ?? Defaults::LIVE_VERSION;
         }
 
         yield $context;
