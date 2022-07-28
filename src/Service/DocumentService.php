@@ -26,7 +26,7 @@ final class DocumentService extends AdminActionService implements DocumentServic
         ): ApiResponse {
         $this->setContext($context);
 
-        return $this->execute(
+        return $this->_execute(
             'post',
             $this->getFullUrl(\sprintf(self::CREATE_DOCUMENT_ENDPOINT, $orderId, $documentTypeName, $fileType)),
             ['static' => true],
@@ -44,7 +44,7 @@ final class DocumentService extends AdminActionService implements DocumentServic
     ): ApiResponse {
         $this->setContext($context);
 
-        return $this->execute(
+        return $this->_execute(
             'post',
             $this->getFullUrl(\sprintf(self::UPLOAD_DOCUMENT_ENDPOINT, $documentId, $extension, $fileName)),
             $body,
@@ -52,7 +52,7 @@ final class DocumentService extends AdminActionService implements DocumentServic
         );
     }
 
-    public function execute(
+    private function _execute(
         string $method,
         string $path,
         array|string $data = '',
