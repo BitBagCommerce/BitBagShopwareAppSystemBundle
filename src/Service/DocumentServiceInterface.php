@@ -15,7 +15,7 @@ interface DocumentServiceInterface
         Context $context,
         array $headers = [],
         string $fileType = 'pdf',
-        ): ApiResponse;
+    ): ApiResponse;
 
     public function uploadDocument(
         string $documentId,
@@ -31,5 +31,5 @@ interface DocumentServiceInterface
         Context $context,
         bool $download = false,
         array $headers = ['Accept' => 'application/pdf'],
-        ): string;
+    ): string;
 }
