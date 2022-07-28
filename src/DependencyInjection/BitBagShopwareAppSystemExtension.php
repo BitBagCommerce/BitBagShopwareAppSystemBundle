@@ -33,7 +33,7 @@ final class BitBagShopwareAppSystemExtension extends Extension
 
     private function addAppConfiguration(ContainerBuilder $container, array $config): void
     {
-        $definitions = $this->getTaggedServices($container, self::TAG_NAME);
+        $definitions = $this->getConfigAwareServices($container);
 
         foreach ($definitions as $definition) {
             $definition
@@ -47,9 +47,9 @@ final class BitBagShopwareAppSystemExtension extends Extension
     /**
      * @return Definition[]
      */
-    private function getTaggedServices(ContainerBuilder $container, string $tagName): array
+    private function getConfigAwareServices(ContainerBuilder $container): array
     {
-        $ids = \array_keys($container->findTaggedServiceIds($tagName));
+        $ids = \array_keys($container->findTaggedServiceIds(self::TAG_NAME));
 
         return \array_map(static fn (string $id) => $container->getDefinition($id), $ids);
     }
