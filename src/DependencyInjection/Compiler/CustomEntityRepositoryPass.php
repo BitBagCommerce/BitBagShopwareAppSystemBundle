@@ -4,48 +4,50 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\DependencyInjection\Compiler;
 
+use BitBag\ShopwareAppSystemBundle\Exception\MissingEntityDefinitionTagValue;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Vin\ShopwareSdk\Repository\EntityRepository;
+use Vin\ShopwareSdk\Repository\RepositoryInterface;
 
 final class CustomEntityRepositoryPass implements CompilerPassInterface
 {
-    private const ENTITY_DEFINITION_SLUG = 'shopware.entity_definition.';
+    private const ENTITY_DEFINITION_TAG = 'shopware.entity_definition.custom';
 
     private const ENTITY_REPOSITORY_SLUG = 'shopware.repository.';
 
     public function process(ContainerBuilder $container): void
     {
-        $customEntityRepositoryDefinitions = $this->getCustomEntityDefinitions($container);
+        $taggedServiceIds = $container->findTaggedServiceIds(self::ENTITY_DEFINITION_TAG);
 
-        foreach ($customEntityRepositoryDefinitions as $definition) {
+        foreach ($taggedServiceIds as $id => $tags) {
+            $tagValue = $tags[0]['value'] ?? throw new MissingEntityDefinitionTagValue(\sprintf(
+                    'Service %s has no valid value for tag %',
+                    $id,
+                    self::ENTITY_DEFINITION_TAG
+                ));
+
+            $entityName = 'custom_entity_' . $tagValue;
+
             $repositoryDefinition = new Definition(EntityRepository::class, [
-                $definition,
-                new Reference($definition),
-                \sprintf('/%s', str_replace('_', '-', $definition)),
+                $entityName,
+                new Reference($id),
+                \sprintf('/%s', str_replace('_', '-', $entityName))
             ]);
 
-            $container->setDefinition(
-                self::ENTITY_REPOSITORY_SLUG . $definition,
-                $repositoryDefinition
+            $repositoryDefinitionName = self::ENTITY_REPOSITORY_SLUG . $entityName;
+
+            $container
+                ->setDefinition($repositoryDefinitionName, $repositoryDefinition)
+                ->setPublic(true);
+
+            $container->registerAliasForArgument(
+                $repositoryDefinitionName,
+                RepositoryInterface::class,
+                $entityName . '.repository'
             );
         }
-    }
-
-    private function getCustomEntityDefinitions(ContainerBuilder $container): array
-    {
-        $serviceIds = $container->getServiceIds();
-        $customEntityRepositoryDefinitions = \array_filter(
-            $serviceIds,
-            fn (string $serviceId) => \str_starts_with($serviceId, self::ENTITY_DEFINITION_SLUG . 'custom_entity_')
-        );
-
-        if ([] === $customEntityRepositoryDefinitions) {
-            return [];
-        }
-
-        return $customEntityRepositoryDefinitions;
     }
 }

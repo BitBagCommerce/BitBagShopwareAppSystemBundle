@@ -26,7 +26,6 @@ final class EntityRepositoryPass implements CompilerPassInterface
 
         foreach ($entityClasses as $entityName => $definitionClass) {
             $entityDefinitionName = self::ENTITY_DEFINITION_SLUG . $entityName;
-            $repositoryDefinitionName = self::ENTITY_REPOSITORY_SLUG . $entityName;
 
             $entityDefinitionDefinition = new Definition($definitionClass);
 
@@ -39,6 +38,8 @@ final class EntityRepositoryPass implements CompilerPassInterface
                 new Reference($entityDefinitionName),
                 \sprintf('/%s', str_replace('_', '-', $entityName)),
             ]);
+
+            $repositoryDefinitionName = self::ENTITY_REPOSITORY_SLUG . $entityName;
 
             $container
                 ->setDefinition($repositoryDefinitionName, $repositoryDefinition)
