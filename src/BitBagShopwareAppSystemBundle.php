@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BitBag\ShopwareAppSystemBundle;
 
 use BitBag\ShopwareAppSystemBundle\DependencyInjection\BitBagShopwareAppSystemExtension;
+use BitBag\ShopwareAppSystemBundle\DependencyInjection\Compiler\CustomEntityRepositoryPass;
 use BitBag\ShopwareAppSystemBundle\DependencyInjection\Compiler\EntityRepositoryPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
@@ -17,6 +18,7 @@ final class BitBagShopwareAppSystemBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new EntityRepositoryPass());
+        $container->addCompilerPass(new CustomEntityRepositoryPass());
     }
 
     public function getContainerExtension(): ExtensionInterface

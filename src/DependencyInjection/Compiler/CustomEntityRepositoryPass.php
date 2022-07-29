@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BitBag\ShopwareAppSystemBundle\DependencyInjection\Compiler;
 
-use BitBag\ShopwareAppSystemBundle\Exception\InvalidEntityMappingException;
+use BitBag\ShopwareAppSystemBundle\Exception\MissingEntityDefinitionTagValue;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -12,30 +12,28 @@ use Symfony\Component\DependencyInjection\Reference;
 use Vin\ShopwareSdk\Repository\EntityRepository;
 use Vin\ShopwareSdk\Repository\RepositoryInterface;
 
-final class EntityRepositoryPass implements CompilerPassInterface
+final class CustomEntityRepositoryPass implements CompilerPassInterface
 {
-    private const ENTITY_MAPPING = __DIR__ . '/../../Resources/config/mapping/entity-mapping.json';
-
-    private const ENTITY_DEFINITION_SLUG = 'shopware.entity_definition.';
+    private const ENTITY_DEFINITION_TAG = 'shopware.entity_definition.custom';
 
     private const ENTITY_REPOSITORY_SLUG = 'shopware.repository.';
 
     public function process(ContainerBuilder $container): void
     {
-        $entityClasses = $this->getMapping();
+        $taggedServiceIds = $container->findTaggedServiceIds(self::ENTITY_DEFINITION_TAG);
 
-        foreach ($entityClasses as $entityName => $definitionClass) {
-            $entityDefinitionName = self::ENTITY_DEFINITION_SLUG . $entityName;
+        foreach ($taggedServiceIds as $id => $tags) {
+            $tagValue = $tags[0]['value'] ?? throw new MissingEntityDefinitionTagValue(\sprintf(
+                'Service %s has no valid value for tag %',
+                $id,
+                self::ENTITY_DEFINITION_TAG
+            ));
 
-            $entityDefinitionDefinition = new Definition($definitionClass);
-
-            $container
-                ->setDefinition($entityDefinitionName, $entityDefinitionDefinition)
-                ->setPublic(true);
+            $entityName = 'custom_entity_' . $tagValue;
 
             $repositoryDefinition = new Definition(EntityRepository::class, [
                 $entityName,
-                new Reference($entityDefinitionName),
+                new Reference($id),
                 \sprintf('/%s', str_replace('_', '-', $entityName)),
             ]);
 
@@ -51,19 +49,5 @@ final class EntityRepositoryPass implements CompilerPassInterface
                 $entityName . '.repository'
             );
         }
-    }
-
-    private function getMapping(): array
-    {
-        $contents = \file_get_contents(self::ENTITY_MAPPING);
-
-        if (false === $contents) {
-            throw new InvalidEntityMappingException(\sprintf(
-                'File at %s could not be read.',
-                self::ENTITY_MAPPING
-            ));
-        }
-
-        return \json_decode($contents, true);
     }
 }
