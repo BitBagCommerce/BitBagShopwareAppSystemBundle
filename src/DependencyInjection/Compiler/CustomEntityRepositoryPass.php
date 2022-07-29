@@ -24,17 +24,17 @@ final class CustomEntityRepositoryPass implements CompilerPassInterface
 
         foreach ($taggedServiceIds as $id => $tags) {
             $tagValue = $tags[0]['value'] ?? throw new MissingEntityDefinitionTagValue(\sprintf(
-                    'Service %s has no valid value for tag %',
-                    $id,
-                    self::ENTITY_DEFINITION_TAG
-                ));
+                'Service %s has no valid value for tag %',
+                $id,
+                self::ENTITY_DEFINITION_TAG
+            ));
 
             $entityName = 'custom_entity_' . $tagValue;
 
             $repositoryDefinition = new Definition(EntityRepository::class, [
                 $entityName,
                 new Reference($id),
-                \sprintf('/%s', str_replace('_', '-', $entityName))
+                \sprintf('/%s', str_replace('_', '-', $entityName)),
             ]);
 
             $repositoryDefinitionName = self::ENTITY_REPOSITORY_SLUG . $entityName;
