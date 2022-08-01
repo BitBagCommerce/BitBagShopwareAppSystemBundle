@@ -43,7 +43,7 @@ final class DocumentService extends AdminActionService implements DocumentServic
         array|string $body,
         Context $context,
         string $extension = 'pdf',
-        array $headers = []
+        array $headers = ['Content-Type' => 'application/octet-stream']
     ): ApiResponse {
         $this->setContext($context);
 
